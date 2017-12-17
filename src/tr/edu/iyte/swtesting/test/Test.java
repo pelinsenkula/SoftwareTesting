@@ -1,27 +1,40 @@
 package tr.edu.iyte.swtesting.test;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
+
 @ManagedBean(name = "testing")
+@ViewScoped
 public class Test {
 
-	private String test = "test";
+	private String test;
+	private Part file;
+
+
+	public Part getFile() {
+		return file;
+	}
+
+	public void setFile(Part file) {
+		this.file = file;
+	}
 
 	public Test() {
 
@@ -35,12 +48,12 @@ public class Test {
 		this.test = test;
 	}
 
-	public String download() throws IOException {
+	public void download() throws IOException {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		// Create a blank sheet
-		XSSFSheet spreadsheet = workbook.createSheet(" Employee Info ");
+		XSSFSheet spreadsheet = workbook.createSheet("Employee Info");
 
 		// Create row object
 		XSSFRow row;
@@ -72,19 +85,34 @@ public class Test {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 
-		ec.responseReset(); 
-		ec.setResponseContentType("vnd.ms-excel"); 
+		ec.responseReset();
+		ec.setResponseContentType("vnd.ms-excel");
 		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"excel.xlsx\"");
 		OutputStream output = ec.getResponseOutputStream();
-		
 
 		workbook.write(output);
-		
-		fc.responseComplete(); 
+
+		fc.responseComplete();
 		output.close();
 		System.out.println("Writesheet.xlsx written successfully");
-		return "OK!";
 
 	}
+	
+	public void upload() {
+		System.out.println("uploaded!");
+		XSSFWorkbook workbook;
+		try {
+			workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet worksheet = workbook.getSheet("Employee Info");
+			XSSFRow row1 = worksheet.getRow(0);
+			XSSFCell cellA1 = row1.getCell((short) 0);
+			System.out.println(cellA1.getStringCellValue());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	
 }
