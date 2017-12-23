@@ -26,11 +26,9 @@ public class TestCaseWriter {
 			for (String IVid : IVList) {
 				excelManager.row(rowIndex).cell(cellIndex).getCell().setCellValue(testCase.get(IVid));
 				cellIndex++;
-				System.out.print(" " + IVid + ":" + testCase.get(IVid));
 			}
 			rowIndex++;
 			cellIndex = 1;
-			System.out.println();
 		}
 
 	}

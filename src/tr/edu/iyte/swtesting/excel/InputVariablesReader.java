@@ -24,7 +24,7 @@ public class InputVariablesReader {
 					excelManager.cellValue(8), excelManager.cellValue(9), excelManager.cellValue(10),
 					excelManager.cellValue(11));
 			ivList.add(iv);
-			System.out.println(iv);
+			
 			i++;
 		}
 		return ivList;

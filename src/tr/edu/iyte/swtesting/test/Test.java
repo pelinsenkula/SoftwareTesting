@@ -121,7 +121,7 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws IOException {
-		System.out.println("done!");
+		
 		FileInputStream fis = new FileInputStream("resource\\input.xlsx");
 		ExcelManager excelManager = new ExcelManager(fis);
 		InputVariablesReader iv = new InputVariablesReader(excelManager); 
