@@ -2,13 +2,13 @@ package tr.edu.iyte.swtesting.model;
 
 public class BoundaryValues {
 
-	private Integer min;
-	private Integer minPlus;
-	private Integer nominal;
-	private Integer maxMinus;
-	private Integer max;
+	private String min;
+	private String minPlus;
+	private String nominal;
+	private String maxMinus;
+	private String max;
 	
-	public BoundaryValues(Integer min, Integer minPlus, Integer nominal, Integer maxMinus, Integer max) {
+	public BoundaryValues(String min, String minPlus, String nominal, String maxMinus, String max) {
 		this.min = min;
 		this.minPlus = minPlus;
 		this.nominal = nominal;
@@ -21,43 +21,43 @@ public class BoundaryValues {
 		
 	}
 
-	public Integer getMin() {
+	public String getMin() {
 		return min;
 	}
 
-	public void setMin(Integer min) {
+	public void setMin(String min) {
 		this.min = min;
 	}
 
-	public Integer getMinPlus() {
+	public String getMinPlus() {
 		return minPlus;
 	}
 
-	public void setMinPlus(Integer minPlus) {
+	public void setMinPlus(String minPlus) {
 		this.minPlus = minPlus;
 	}
 
-	public Integer getNominal() {
+	public String getNominal() {
 		return nominal;
 	}
 
-	public void setNominal(Integer nominal) {
+	public void setNominal(String nominal) {
 		this.nominal = nominal;
 	}
 
-	public Integer getMaxMinus() {
+	public String getMaxMinus() {
 		return maxMinus;
 	}
 
-	public void setMaxMinus(Integer maxMinus) {
+	public void setMaxMinus(String maxMinus) {
 		this.maxMinus = maxMinus;
 	}
 
-	public Integer getMax() {
+	public String getMax() {
 		return max;
 	}
 
-	public void setMax(Integer max) {
+	public void setMax(String max) {
 		this.max = max;
 	}
 	

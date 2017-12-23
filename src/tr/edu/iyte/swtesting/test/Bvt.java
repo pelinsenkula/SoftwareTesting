@@ -10,87 +10,95 @@ import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
 public class Bvt {
+	private Map<String, String> nominalValues;
+	private List<InputVariables> inputVariablesList;
 	
-	public Bvt () {
-		
+	public Bvt (List<InputVariables> inputVariablesList) {
+		this.inputVariablesList = inputVariablesList;
+		this.nominalValues = calculateNominalValues(inputVariablesList);		
 	}
 	
-	public List<Map<String,Integer>> generateBvtTestCases(List<InputVariables> inputVariablesList) {
-		String id;
-		int nominal;
-		Map<String,Integer> nominalValues = new HashMap<String,Integer>();
-		Map<String,Integer> testCase = new HashMap<String,Integer>();
-		List<Map<String,Integer>> testCases = new ArrayList<Map<String,Integer>>();		
+	public List<Map<String,String>> generateBvtTestCases() {
+		String id;		
+		Map<String,String> testCase = new HashMap<String,String>();
+		List<Map<String,String>> testCases = new ArrayList<Map<String,String>>();	
 		
-		for(int i=0; i<inputVariablesList.size();i++) {
-			nominalValues = new HashMap<String,Integer>();
-			for (int j=i+1; j<inputVariablesList.size();j++) {
-				id = inputVariablesList.get(j).getId();
-				nominal = inputVariablesList.get(j).getBoundaryValues().getNominal();
-				nominalValues.put(id, nominal);
-			}
-			
-			for (int k=i-1;k>=0;k--) {
-				id = inputVariablesList.get(k).getId();
-				nominal = inputVariablesList.get(k).getBoundaryValues().getNominal();
-				nominalValues.put(id, nominal);
-			}
+		for(int i=0; i<inputVariablesList.size();i++) {		
+//			remove the value which will be used with boundary values and the rest with nominal values
+			String nominalOfI = nominalValues.get(inputVariablesList.get(i).getId());
+			nominalValues.remove(inputVariablesList.get(i).getId());
 			
 			id = inputVariablesList.get(i).getId();
 			BoundaryValues boundaryValues = inputVariablesList.get(i).getBoundaryValues();
 			
 			testCase = new HashMap<>();
 			testCase.put(id, boundaryValues.getMin());
-			testCase.putAll(nominalValues);
-			
-			testCases.add(testCase);
+			testCase.putAll(nominalValues);			
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}			
 			
 			testCase = new HashMap<>();
 			testCase.put(id, boundaryValues.getMinPlus());
 			testCase.putAll(nominalValues);
-			
-			testCases.add(testCase);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
 			
 			testCase = new HashMap<>();
 			testCase.put(id, boundaryValues.getNominal());
 			testCase.putAll(nominalValues);
-			
-			testCases.add(testCase);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
 			
 			testCase = new HashMap<>();
 			testCase.put(id, boundaryValues.getMaxMinus());
 			testCase.putAll(nominalValues);
-			
-			testCases.add(testCase);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
 			
 			testCase = new HashMap<>();
 			testCase.put(id, boundaryValues.getMax());
 			testCase.putAll(nominalValues);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}	
 			
-			testCases.add(testCase);						
+			nominalValues.put(inputVariablesList.get(i).getId(), nominalOfI);
 		}
 		return testCases;
 	}
 	
+	public Map<String,String> calculateNominalValues(List<InputVariables> inputVariablesList) {
+		Map<String,String> nominalValues = new HashMap<String,String>();
+		for (int j=0; j<inputVariablesList.size();j++) {			
+			String id = inputVariablesList.get(j).getId();
+			String nominal = inputVariablesList.get(j).getBoundaryValues().getNominal();
+			nominalValues.put(id, nominal);
+		}		
+		return nominalValues;		
+	}
+	
 	
 	public static void main(String[] args) {
-		InputVariables iv = new InputVariables("a", "a", new BoundaryValues(1,2,100,199,200));
-		InputVariables iv2 = new InputVariables("b", "b", new BoundaryValues(1,2,100,199,200));
-		InputVariables iv3 = new InputVariables("c", "c", new BoundaryValues(1,2,100,199,200));
+		InputVariables iv = new InputVariables("a", "a", "0","1","2","100","199","200","201");
+		InputVariables iv2 = new InputVariables("b", "b","0", "1","2","100","199","200","201");
+		InputVariables iv3 = new InputVariables("c", "c","0", "1","2","100","199","200","201");
 
-		InputVariables iv4 = new InputVariables("d", "c", new BoundaryValues(1,2,100,199,200));
-
-		InputVariables iv5 = new InputVariables("e", "c", new BoundaryValues(1,2,100,199,200));
+//		InputVariables iv4 = new InputVariables("d", "c", new BoundaryValues(1,2,100,199,200));
+//
+//		InputVariables iv5 = new InputVariables("e", "c", new BoundaryValues(1,2,100,199,200));
 		List<InputVariables> inputVariablesList = new ArrayList<InputVariables>();
 		inputVariablesList.add(iv);
 		inputVariablesList.add(iv2);
 		inputVariablesList.add(iv3);
-		inputVariablesList.add(iv4);
-		inputVariablesList.add(iv5);
+//		inputVariablesList.add(iv4);
+//		inputVariablesList.add(iv5);
 		
-		Bvt bvt = new Bvt();
-		//Map<String, List<Integer>> map = bvt.generateBvtTestCases(inputVariablesList);
-		List<Map<String, Integer>> a = bvt.generateBvtTestCases(inputVariablesList);
+		Bvt bvt = new Bvt(inputVariablesList);
+		List<Map<String, String>> a = bvt.generateBvtTestCases();
 		
 		System.out.println(Arrays.asList(a));
 	}

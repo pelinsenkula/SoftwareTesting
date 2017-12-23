@@ -6,16 +6,16 @@ public class InputVariables {
 	private String variable;
 	// private String noOfEC;
 	// private String valuesForEcs;
-	private Integer minMinus;
-	private Integer min;
-	private Integer minPlus;
-	private Integer nominal;
-	private Integer maxMinus;
-	private Integer max;
-	private Integer maxPlus;
+	private String minMinus;
+	private String min;
+	private String minPlus;
+	private String nominal;
+	private String maxMinus;
+	private String max;
+	private String maxPlus;
 
-	public InputVariables(String id, String variable, Integer minMinus, Integer min, Integer minPlus, Integer nominal,
-			Integer maxMinus, Integer max, Integer maxPlus) {
+	public InputVariables(String id, String variable, String minMinus, String min, String minPlus, String nominal,
+			String maxMinus, String max, String maxPlus) {
 		setId(id);
 		setVariable(variable);
 		setMinMinus(minMinus);
@@ -25,6 +25,14 @@ public class InputVariables {
 		setMaxMinus(maxMinus);
 		setMax(max);
 		setMaxPlus(maxPlus);		
+	}
+	
+	public BoundaryValues getBoundaryValues() {
+		return new BoundaryValues(min, minPlus, nominal, maxMinus, max);
+	}
+	
+	public RobustBoundaryValues getRobustBoundaryValues() {
+		return new RobustBoundaryValues(minMinus, min, minPlus, nominal, maxMinus, max, maxPlus);
 	}
 
 	public String getId() {
@@ -43,59 +51,59 @@ public class InputVariables {
 		this.variable = variable;
 	}
 
-	public Integer getMinMinus() {
+	public String getMinMinus() {
 		return minMinus;
 	}
 
-	public void setMinMinus(Integer minMinus) {
+	public void setMinMinus(String minMinus) {
 		this.minMinus = minMinus;
 	}
 
-	public Integer getMin() {
+	public String getMin() {
 		return min;
 	}
 
-	public void setMin(Integer min) {
+	public void setMin(String min) {
 		this.min = min;
 	}
 
-	public Integer getMinPlus() {
+	public String getMinPlus() {
 		return minPlus;
 	}
 
-	public void setMinPlus(Integer minPlus) {
+	public void setMinPlus(String minPlus) {
 		this.minPlus = minPlus;
 	}
 
-	public Integer getNominal() {
+	public String getNominal() {
 		return nominal;
 	}
 
-	public void setNominal(Integer nominal) {
+	public void setNominal(String nominal) {
 		this.nominal = nominal;
 	}
 
-	public Integer getMaxMinus() {
+	public String getMaxMinus() {
 		return maxMinus;
 	}
 
-	public void setMaxMinus(Integer maxMinus) {
+	public void setMaxMinus(String maxMinus) {
 		this.maxMinus = maxMinus;
 	}
 
-	public Integer getMax() {
+	public String getMax() {
 		return max;
 	}
 
-	public void setMax(Integer max) {
+	public void setMax(String max) {
 		this.max = max;
 	}
 
-	public Integer getMaxPlus() {
+	public String getMaxPlus() {
 		return maxPlus;
 	}
 
-	public void setMaxPlus(Integer maxPlus) {
+	public void setMaxPlus(String maxPlus) {
 		this.maxPlus = maxPlus;
 	}
 

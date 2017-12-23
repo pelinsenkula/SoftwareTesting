@@ -2,10 +2,10 @@ package tr.edu.iyte.swtesting.model;
 
 public class RobustBoundaryValues extends BoundaryValues {
 
-	private Integer minMinus;
-	private Integer maxPlus;
+	private String minMinus;
+	private String maxPlus;
 	
-	public RobustBoundaryValues(Integer minMinus, Integer min, Integer minPlus, Integer nominal, Integer maxMinus, Integer max, Integer maxPlus) {
+	public RobustBoundaryValues(String minMinus, String min, String minPlus, String nominal, String maxMinus, String max, String maxPlus) {
 		super(min, minPlus, nominal, maxMinus, max);
 		this.minMinus = minMinus;
 		this.maxPlus = maxPlus;
@@ -16,11 +16,19 @@ public class RobustBoundaryValues extends BoundaryValues {
 		super();
 	}
 
-	public Integer getMinMinus() {
+	public String getMinMinus() {
 		return minMinus;
 	}
 
-	public void setMinMinus(Integer minMinus) {
+	public void setMinMinus(String minMinus) {
 		this.minMinus = minMinus;
+	}
+
+	public String getMaxPlus() {
+		return maxPlus;
+	}
+
+	public void setMaxPlus(String maxPlus) {
+		this.maxPlus = maxPlus;
 	}
 }
