@@ -8,6 +8,7 @@ import java.util.Map;
 
 import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
+import tr.edu.iyte.swtesting.model.RobustBoundaryValues;
 
 public class RobustBvt extends Bvt{
 
@@ -15,8 +16,33 @@ public class RobustBvt extends Bvt{
 		super(inputVariablesList);
 	}
 
-	public List<Map<String,String>> generateRobustBvtTestCases(List<InputVariables> inputVariablesList) {
+	public List<Map<String,String>> generateRobustBvtTestCases() {
 		List<Map<String,String>> testCases = super.generateBvtTestCases();
+		Map<String,String> testCase = new HashMap<String,String>();
+		String id;		
+		for(int i=0; i<getInputVariablesList().size();i++) {	
+//			remove the value which will be used with boundary values and the rest with nominal values
+			String nominalOfI = getNominalValues().get(getInputVariablesList().get(i).getId());
+			getNominalValues().remove(getInputVariablesList().get(i).getId());
+			
+			id = getInputVariablesList().get(i).getId();
+			RobustBoundaryValues robustBoundaryValues = getInputVariablesList().get(i).getRobustBoundaryValues();
+			
+			testCase = new HashMap<>();
+			testCase.put(id, robustBoundaryValues.getMinMinus());
+			testCase.putAll(getNominalValues());			
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}	
+			
+			testCase = new HashMap<>();
+			testCase.put(id, robustBoundaryValues.getMaxPlus());
+			testCase.putAll(getNominalValues());			
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
+			getNominalValues().put(getInputVariablesList().get(i).getId(), nominalOfI);
+		}
 		
 		return testCases;
 		
@@ -33,7 +59,7 @@ public class RobustBvt extends Bvt{
 		inputVariablesList.add(iv3);
 		
 		RobustBvt bvt = new RobustBvt(inputVariablesList);
-		List<Map<String, String>> a = bvt.generateBvtTestCases();
+		List<Map<String, String>> a = bvt.generateRobustBvtTestCases();
 		
 		System.out.println(Arrays.asList(a));
 	}

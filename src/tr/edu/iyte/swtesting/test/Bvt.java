@@ -82,6 +82,22 @@ public class Bvt {
 	}
 	
 	
+	public Map<String, String> getNominalValues() {
+		return nominalValues;
+	}
+
+	public void setNominalValues(Map<String, String> nominalValues) {
+		this.nominalValues = nominalValues;
+	}
+
+	public List<InputVariables> getInputVariablesList() {
+		return inputVariablesList;
+	}
+
+	public void setInputVariablesList(List<InputVariables> inputVariablesList) {
+		this.inputVariablesList = inputVariablesList;
+	}
+
 	public static void main(String[] args) {
 		InputVariables iv = new InputVariables("a", "a", "0","1","2","100","199","200","201");
 		InputVariables iv2 = new InputVariables("b", "b","0", "1","2","100","199","200","201");
