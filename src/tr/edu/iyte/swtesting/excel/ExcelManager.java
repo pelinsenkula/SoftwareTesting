@@ -1,7 +1,10 @@
 package tr.edu.iyte.swtesting.excel;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -20,28 +23,29 @@ public class ExcelManager {
 
 	public ExcelManager setActiveSheet(String sheetName) {
 		currentSheet = workbook.getSheet(sheetName);
+		if(currentSheet==null) {
+			currentSheet = workbook.createSheet(sheetName);
+		}
 		return this;
 	}
 
 	public ExcelManager row(Integer index) {
 		currentRow = currentSheet.getRow(index);
+		if (currentRow == null) {
+			currentRow = currentSheet.createRow(index);
+		}
 		return this;
 	}
 
 	public ExcelManager cell(Integer index) {
-		if(currentRow == null) {
-			currentCell = null;
-			return this;
-		}
-		
 		currentCell = currentRow.getCell(index);
+		if (currentCell == null) {
+			currentCell = currentRow.createCell(index);
+		}
 		return this;
 	}
 
 	public String cellValue() {
-		if(currentCell == null) {
-			return "";
-		}
 		String val = null;
 		try {
 			val = currentCell.getStringCellValue();
@@ -60,4 +64,11 @@ public class ExcelManager {
 		return this.row(rowIndex).cell(cellIndex).cellValue();
 	}
 
+	public XSSFCell getCell() {
+		return currentCell;
+	}
+
+	public void save(OutputStream outputStream) throws IOException{
+		workbook.write(outputStream);
+	}
 }

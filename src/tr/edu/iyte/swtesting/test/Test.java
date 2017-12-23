@@ -2,8 +2,10 @@ package tr.edu.iyte.swtesting.test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -22,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.excel.InputVariablesReader;
+import tr.edu.iyte.swtesting.excel.TestCaseWriter;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
 @ManagedBean(name = "testing")
@@ -120,8 +123,13 @@ public class Test {
 	public static void main(String[] args) throws IOException {
 		System.out.println("done!");
 		FileInputStream fis = new FileInputStream("resource\\input.xlsx");
-		ExcelManager excel = new ExcelManager(fis);
-		InputVariablesReader iv = new InputVariablesReader(excel); 
-		iv.read();
+		ExcelManager excelManager = new ExcelManager(fis);
+		InputVariablesReader iv = new InputVariablesReader(excelManager); 
+		Bvt bvt = new Bvt(iv.read());
+		TestCaseWriter tc = new TestCaseWriter(excelManager);
+		tc.write("Boundary Value Analysis", bvt.generateBvtTestCases());
+		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
+		excelManager.save(outputStream);
+		
 	}
 }
