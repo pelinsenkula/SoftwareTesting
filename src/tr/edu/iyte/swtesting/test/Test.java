@@ -119,7 +119,7 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 		System.out.println("done!");
-		FileInputStream fis = new FileInputStream("C:\\input.xlsx");
+		FileInputStream fis = new FileInputStream("resource\\input.xlsx");
 		ExcelManager excel = new ExcelManager(fis);
 		InputVariablesReader iv = new InputVariablesReader(excel); 
 		iv.read();
