@@ -1,5 +1,6 @@
 package tr.edu.iyte.swtesting.excel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +14,19 @@ public class TestCaseWriter {
 	}
 
 	public void write(String sheetName, List<Map<String, String>> testCases) {
+		List<String> IVList=new ArrayList<String>();
 		rowIndex = 2;
 		cellIndex = 1;
 		excelManager.setActiveSheet(sheetName);
+		while (excelManager.cellValue(1, cellIndex).contains("IV")) {
+			IVList.add(excelManager.cellValue(1, cellIndex));
+			cellIndex++;
+		}
 		for (Map<String, String> testCase : testCases) {
-			for (String variable : testCase.keySet()) {
-				excelManager.row(rowIndex).cell(cellIndex).getCell().setCellValue(testCase.get(variable));
+			for (String IVid : IVList) {
+				excelManager.row(rowIndex).cell(cellIndex).getCell().setCellValue(testCase.get(IVid));
 				cellIndex++;
-				System.out.print(" " + variable + ":" + testCase.get(variable));
+				System.out.print(" " + IVid + ":" + testCase.get(IVid));
 			}
 			rowIndex++;
 			cellIndex = 1;
