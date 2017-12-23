@@ -1,5 +1,7 @@
 package tr.edu.iyte.swtesting.test;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
@@ -18,7 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
+import tr.edu.iyte.swtesting.excel.ExcelManager;
+import tr.edu.iyte.swtesting.excel.InputVariablesReader;
+import tr.edu.iyte.swtesting.model.InputVariables;
 
 @ManagedBean(name = "testing")
 @ViewScoped
@@ -26,7 +30,6 @@ public class Test {
 
 	private String test;
 	private Part file;
-
 
 	public Part getFile() {
 		return file;
@@ -97,7 +100,7 @@ public class Test {
 		System.out.println("Writesheet.xlsx written successfully");
 
 	}
-	
+
 	public void upload() {
 		System.out.println("uploaded!");
 		XSSFWorkbook workbook;
@@ -107,12 +110,18 @@ public class Test {
 			XSSFRow row1 = worksheet.getRow(0);
 			XSSFCell cellA1 = row1.getCell((short) 0);
 			System.out.println(cellA1.getStringCellValue());
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	
+	public static void main(String[] args) throws IOException {
+		System.out.println("done!");
+		FileInputStream fis = new FileInputStream("C:\\input.xlsx");
+		ExcelManager excel = new ExcelManager(fis);
+		InputVariablesReader iv = new InputVariablesReader(excel); 
+		iv.read();
+	}
 }

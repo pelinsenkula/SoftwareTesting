@@ -107,5 +107,27 @@ public class InputVariables {
 		this.maxPlus = maxPlus;
 	}
 
-
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" ID:");
+		sb.append(getId());
+		sb.append(" VAR_NAME:");
+		sb.append(getVariable());
+		sb.append(" MIN-:");
+		sb.append(getMinMinus());
+		sb.append(" MIN:");
+		sb.append(getMin());
+		sb.append(" MIN+:");
+		sb.append(getMinPlus());
+		sb.append(" NOMINAL:");
+		sb.append(getNominal());
+		sb.append(" MAX-:");
+		sb.append(getMaxMinus());
+		sb.append(" MAX:");
+		sb.append(getMax());
+		sb.append(" MAX+ :");
+		sb.append(getMaxPlus());
+		return sb.toString();
+	}
 }
