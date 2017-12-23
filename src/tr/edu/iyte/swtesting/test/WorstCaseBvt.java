@@ -23,20 +23,40 @@ public class WorstCaseBvt {
 		ChainCounter c1 = null, c2 = null;
 		for (int i = 0; i < inputVariablesList.size(); i++) {
 			if (i == 0) {
-				c2 = new ChainCounter(0, 5, null);
-			}else {
-				c2 = new ChainCounter(0, 5, c1);
+				c2 = new ChainCounter(0, 4, null);
+			} else {
+				c2 = new ChainCounter(0, 4, c1);
 			}
 			counters.add(c2);
 			c1 = c2;
 		}
 
 		while (!counters.get(0).isChainFinished()) {
-			for(int i=0; i<inputVariablesList.size();i++) {
-				System.out.print(counters.get(i).value()+" ");
+			for (int i = 0; i < inputVariablesList.size(); i++) {
+//				System.out.print(counters.get(i).value() + " ");
+				String val = null;
+				switch (counters.get(i).value()) {
+				case 0:
+					val = inputVariablesList.get(i).getMin();
+					break;
+				case 1:
+					val = inputVariablesList.get(i).getMinPlus();
+					break;
+				case 2:
+					val = inputVariablesList.get(i).getNominal();
+					break;
+				case 3:
+					val = inputVariablesList.get(i).getMaxMinus();
+					break;
+				case 4:
+					val = inputVariablesList.get(i).getMax();
+					break;
+				}
+				System.out.print(inputVariablesList.get(i).getId() + ":" + val + " ,");
+
 			}
 			System.out.println();
-			counters.get(counters.size()-1).increment();
+			counters.get(counters.size() - 1).increment();
 		}
 		// for(int i=0; i<inputVariablesList.size();i++) {
 		// BoundaryValues boundaryValues =
@@ -54,8 +74,8 @@ public class WorstCaseBvt {
 		List<InputVariables> inputVariablesList = new ArrayList<InputVariables>();
 		inputVariablesList.add(iv);
 		inputVariablesList.add(iv2);
-		inputVariablesList.add(iv3);
-		inputVariablesList.add(iv4);
+//		inputVariablesList.add(iv3);
+//		inputVariablesList.add(iv4);
 
 		WorstCaseBvt bvt = new WorstCaseBvt(inputVariablesList);
 		bvt.generateWorstCaseBvtTestCases();
