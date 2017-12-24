@@ -13,7 +13,7 @@ public class CursorBounded extends Cursor {
 	@Override
 	public Integer nextCellIndex() {
 		Integer val = super.nextCellIndex();
-		if (cellEnd != null && val > cellEnd) {
+		if (cellEnd != null && val >= cellEnd) {
 			super.resetCellIndex();
 			val = super.getCellIndex();
 		}
@@ -23,7 +23,7 @@ public class CursorBounded extends Cursor {
 	@Override
 	public Integer nextRowIndex() {
 		Integer val = super.nextRowIndex();
-		if (rowEnd != null && val > rowEnd) {
+		if (rowEnd != null && val >= rowEnd) {
 			super.resetRowIndex();
 			val = super.getRowIndex();
 		}
