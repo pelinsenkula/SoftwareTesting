@@ -64,20 +64,20 @@ public class WorstCaseBvt {
 
 	}
 
-	public static void main(String[] args) {
-		InputVariables iv = new InputVariables("a", "a", "0", "1", "2", "100", "199", "200", "201");
-		InputVariables iv2 = new InputVariables("b", "b", "0", "1", "2", "100", "199", "200", "201");
-		InputVariables iv3 = new InputVariables("c", "c", "0", "1", "2", "100", "199", "200", "201");
-		InputVariables iv4 = new InputVariables("d", "d", "0", "1", "2", "100", "199", "200", "201");
-
-		List<InputVariables> inputVariablesList = new ArrayList<InputVariables>();
-		inputVariablesList.add(iv);
-		inputVariablesList.add(iv2);
-		 inputVariablesList.add(iv3);
-		 inputVariablesList.add(iv4);
-
-		WorstCaseBvt bvt = new WorstCaseBvt(inputVariablesList);
-		System.out.println(Arrays.asList(bvt.generateWorstCaseBvtTestCases()));
-	}
+//	public static void main(String[] args) {
+//		InputVariables iv = new InputVariables("a", "a", "0", "1", "2", "100", "199", "200", "201");
+//		InputVariables iv2 = new InputVariables("b", "b", "0", "1", "2", "100", "199", "200", "201");
+//		InputVariables iv3 = new InputVariables("c", "c", "0", "1", "2", "100", "199", "200", "201");
+//		InputVariables iv4 = new InputVariables("d", "d", "0", "1", "2", "100", "199", "200", "201");
+//
+//		List<InputVariables> inputVariablesList = new ArrayList<InputVariables>();
+//		inputVariablesList.add(iv);
+//		inputVariablesList.add(iv2);
+//		 inputVariablesList.add(iv3);
+//		 inputVariablesList.add(iv4);
+//
+//		WorstCaseBvt bvt = new WorstCaseBvt(inputVariablesList);
+//		System.out.println(Arrays.asList(bvt.generateWorstCaseBvtTestCases()));
+//	}
 
 }

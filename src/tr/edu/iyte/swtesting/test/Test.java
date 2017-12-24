@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.excel.InputVariablesReader;
@@ -120,7 +121,7 @@ public class Test {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InvalidInputException {
 
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\input.xlsx"));
 		List<InputVariables> inputVariablesList = new InputVariablesReader(excelManager).read();
