@@ -9,7 +9,7 @@ import tr.edu.iyte.swtesting.utils.Cursor;
 public class TestCaseWriter {
 	private ExcelManager excelManager;
 
-	public TestCaseWriter(ExcelManager excelManager) {
+	protected TestCaseWriter(ExcelManager excelManager) {
 		this.excelManager = excelManager;
 	}
 

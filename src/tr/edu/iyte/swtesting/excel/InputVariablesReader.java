@@ -22,7 +22,7 @@ import tr.edu.iyte.swtesting.utils.CursorBounded;
 public class InputVariablesReader {
 	private ExcelManager excelManager;
 
-	public InputVariablesReader(ExcelManager excelManager) {
+	protected InputVariablesReader(ExcelManager excelManager) {
 		this.excelManager = excelManager;
 	}
 
@@ -119,7 +119,7 @@ public class InputVariablesReader {
 		for(InputVariables i : inputVariablesList) {
 			System.out.println(i);
 		}
-		
+		System.out.println("");
 		excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
 		inputVariablesList = new InputVariablesReader(excelManager).read();
 		for(InputVariables i : inputVariablesList) {

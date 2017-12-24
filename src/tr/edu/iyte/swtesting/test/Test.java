@@ -123,16 +123,16 @@ public class Test {
 
 	public static void main(String[] args) throws IOException, InvalidInputException {
 
-		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\input.xlsx"));
-		List<InputVariables> inputVariablesList = new InputVariablesReader(excelManager).read();
+		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
+		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
 		Bvt bvt = new Bvt(inputVariablesList);
 		WorstCaseBvt worstCasebvt = new WorstCaseBvt(inputVariablesList);
 		RobustBvt robustbvt = new RobustBvt(inputVariablesList);
 
-		TestCaseWriter tc = new TestCaseWriter(excelManager);
-		tc.write("Boundary Value Analysis", bvt.generateBvtTestCases());
-		tc.write("Robustness Test Cases", robustbvt.generateRobustBvtTestCases());
-		tc.write("Worst Case Test Cases", worstCasebvt.generateWorstCaseBvtTestCases());
+		excelManager.writeTestCases("Boundary Value Analysis", bvt.generateBvtTestCases());
+		excelManager.writeTestCases("Robustness Test Cases", robustbvt.generateRobustBvtTestCases());
+		excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt.generateWorstCaseBvtTestCases());
+		
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);
 
