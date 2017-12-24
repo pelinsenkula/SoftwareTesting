@@ -1,4 +1,4 @@
-package tr.edu.iyte.swtesting.model;
+package tr.edu.iyte.swtesting.utils;
 
 
 public class ChainCounter {

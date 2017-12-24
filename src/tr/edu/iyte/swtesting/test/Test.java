@@ -121,15 +121,19 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws IOException {
-		
-		FileInputStream fis = new FileInputStream("resource\\input.xlsx");
-		ExcelManager excelManager = new ExcelManager(fis);
-		InputVariablesReader iv = new InputVariablesReader(excelManager); 
-		Bvt bvt = new Bvt(iv.read());
+
+		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\input.xlsx"));
+		List<InputVariables> inputVariablesList = new InputVariablesReader(excelManager).read();
+		Bvt bvt = new Bvt(inputVariablesList);
+		WorstCaseBvt worstCasebvt = new WorstCaseBvt(inputVariablesList);
+		RobustBvt robustbvt = new RobustBvt(inputVariablesList);
+
 		TestCaseWriter tc = new TestCaseWriter(excelManager);
 		tc.write("Boundary Value Analysis", bvt.generateBvtTestCases());
+		tc.write("Robustness Test Cases", robustbvt.generateRobustBvtTestCases());
+		tc.write("Worst Case Test Cases", worstCasebvt.generateWorstCaseBvtTestCases());
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);
-		
+
 	}
 }

@@ -2,12 +2,13 @@ package tr.edu.iyte.swtesting.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import tr.edu.iyte.swtesting.model.BoundaryValues;
-import tr.edu.iyte.swtesting.model.ChainCounter;
 import tr.edu.iyte.swtesting.model.InputVariables;
+import tr.edu.iyte.swtesting.utils.ChainCounter;
 
 public class WorstCaseBvt {
 
@@ -17,8 +18,9 @@ public class WorstCaseBvt {
 		this.inputVariablesList = inputVariablesList;
 	}
 
-	public void generateWorstCaseBvtTestCases() {
+	public List<Map<String, String>> generateWorstCaseBvtTestCases() {
 		List<ChainCounter> counters = new ArrayList<>();
+		List<Map<String, String>> testCases = new ArrayList<>();
 
 		ChainCounter c1 = null, c2 = null;
 		for (int i = 0; i < inputVariablesList.size(); i++) {
@@ -32,8 +34,9 @@ public class WorstCaseBvt {
 		}
 
 		while (!counters.get(0).isChainFinished()) {
+			Map<String, String> testCase = new HashMap<>();
 			for (int i = 0; i < inputVariablesList.size(); i++) {
-//				System.out.print(counters.get(i).value() + " ");
+				// System.out.print(counters.get(i).value() + " ");
 				String val = null;
 				switch (counters.get(i).value()) {
 				case 0:
@@ -52,16 +55,12 @@ public class WorstCaseBvt {
 					val = inputVariablesList.get(i).getMax();
 					break;
 				}
-				System.out.print(inputVariablesList.get(i).getId() + ":" + val + " ,");
-
+				testCase.put(inputVariablesList.get(i).getId(), val);
 			}
-			System.out.println();
+			testCases.add(testCase);
 			counters.get(counters.size() - 1).increment();
 		}
-		// for(int i=0; i<inputVariablesList.size();i++) {
-		// BoundaryValues boundaryValues =
-		// inputVariablesList.get(i).getBoundaryValues();
-		// }
+		return testCases;
 
 	}
 
@@ -69,16 +68,16 @@ public class WorstCaseBvt {
 		InputVariables iv = new InputVariables("a", "a", "0", "1", "2", "100", "199", "200", "201");
 		InputVariables iv2 = new InputVariables("b", "b", "0", "1", "2", "100", "199", "200", "201");
 		InputVariables iv3 = new InputVariables("c", "c", "0", "1", "2", "100", "199", "200", "201");
-		InputVariables iv4 = new InputVariables("c", "c", "0", "1", "2", "100", "199", "200", "201");
+		InputVariables iv4 = new InputVariables("d", "d", "0", "1", "2", "100", "199", "200", "201");
 
 		List<InputVariables> inputVariablesList = new ArrayList<InputVariables>();
 		inputVariablesList.add(iv);
 		inputVariablesList.add(iv2);
-//		inputVariablesList.add(iv3);
-//		inputVariablesList.add(iv4);
+		 inputVariablesList.add(iv3);
+		 inputVariablesList.add(iv4);
 
 		WorstCaseBvt bvt = new WorstCaseBvt(inputVariablesList);
-		bvt.generateWorstCaseBvtTestCases();
+		System.out.println(Arrays.asList(bvt.generateWorstCaseBvtTestCases()));
 	}
 
 }
