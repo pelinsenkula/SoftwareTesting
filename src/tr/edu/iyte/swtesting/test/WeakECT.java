@@ -12,7 +12,6 @@ import java.util.Map;
 import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 import tr.edu.iyte.swtesting.excel.ExcelManager;
-import tr.edu.iyte.swtesting.excel.InputVariablesReader;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
 public class WeakECT {
@@ -40,9 +39,7 @@ public class WeakECT {
 			}
 			testCases.add(testCase);
 		}
-
 		return testCases;
-
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, InvalidInputException {

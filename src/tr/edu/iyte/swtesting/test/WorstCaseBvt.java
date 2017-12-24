@@ -1,12 +1,10 @@
 package tr.edu.iyte.swtesting.test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.utils.ChainCounter;
 
@@ -22,15 +20,10 @@ public class WorstCaseBvt {
 		List<ChainCounter> counters = new ArrayList<>();
 		List<Map<String, String>> testCases = new ArrayList<>();
 
-		ChainCounter c1 = null, c2 = null;
+		ChainCounter c1 = null;
 		for (int i = 0; i < inputVariablesList.size(); i++) {
-			if (i == 0) {
-				c2 = new ChainCounter(0, 4, null);
-			} else {
-				c2 = new ChainCounter(0, 4, c1);
-			}
-			counters.add(c2);
-			c1 = c2;
+			c1 = new ChainCounter(0, 4, c1);
+			counters.add(c1);
 		}
 
 		while (!counters.get(0).isChainFinished()) {
