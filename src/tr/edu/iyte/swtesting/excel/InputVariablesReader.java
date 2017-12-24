@@ -21,16 +21,16 @@ public class InputVariablesReader {
 		Cursor cursorIV = new Cursor(2, 0);
 		Cursor cursorValues = new Cursor(2, 5);
 		while (excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex()).contains("IV")) {
-			InputVariables iv = new InputVariables(
-					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex()),
-					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.getCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
-					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()));
+			InputVariables iv = new InputVariables(// input variables
+					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex()), // ID
+					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.nextCellIndex()), // variable name
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.getCellIndex()), // min-
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()), // min
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()), // min+
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()), // nominal
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()), // max-
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()), // max
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()));// max+
 			ivList.add(iv);
 
 			cursorIV.nextRowIndex();
