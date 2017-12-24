@@ -7,9 +7,11 @@ public class InputVariables {
 
 	private String id;
 	private String variable;
+	private String type;
 	// private String noOfEC;
 	// private String valuesForEcs;
 	private Map<String,String> valuesForECs;
+	private List<String> namesForECs;
 	private String minMinus;
 	private String min;
 	private String minPlus;
@@ -18,11 +20,13 @@ public class InputVariables {
 	private String max;
 	private String maxPlus;
 
-	public InputVariables(String id, String variable, Map<String,String> valuesForECs, String minMinus, String min, String minPlus, String nominal,
+	public InputVariables(String id, String variable,String type, Map<String,String> valuesForECs,List<String> namesForECs, String minMinus, String min, String minPlus, String nominal,
 			String maxMinus, String max, String maxPlus) {
 		setId(id);
 		setVariable(variable);
+		setType(type);
 		setValuesForECs(valuesForECs);
+		setNamesForECs(namesForECs);
 		setMinMinus(minMinus);
 		setMin(min);
 		setMinPlus(minPlus);
@@ -118,6 +122,22 @@ public class InputVariables {
 
 	public void setValuesForECs(Map<String,String> valuesForECs) {
 		this.valuesForECs = valuesForECs;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public List<String> getNamesForECs() {
+		return namesForECs;
+	}
+
+	public void setNamesForECs(List<String> namesForECs) {
+		this.namesForECs = namesForECs;
 	}
 
 	@Override
