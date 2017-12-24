@@ -1,11 +1,15 @@
 package tr.edu.iyte.swtesting.model;
 
+import java.util.List;
+import java.util.Map;
+
 public class InputVariables {
 
 	private String id;
 	private String variable;
 	// private String noOfEC;
 	// private String valuesForEcs;
+	private Map<String,List<String>> valuesForECs;
 	private String minMinus;
 	private String min;
 	private String minPlus;
@@ -14,10 +18,11 @@ public class InputVariables {
 	private String max;
 	private String maxPlus;
 
-	public InputVariables(String id, String variable, String minMinus, String min, String minPlus, String nominal,
+	public InputVariables(String id, String variable, Map<String,List<String>> valuesForECs, String minMinus, String min, String minPlus, String nominal,
 			String maxMinus, String max, String maxPlus) {
 		setId(id);
 		setVariable(variable);
+		setValuesForECs(valuesForECs);
 		setMinMinus(minMinus);
 		setMin(min);
 		setMinPlus(minPlus);
@@ -105,6 +110,14 @@ public class InputVariables {
 
 	public void setMaxPlus(String maxPlus) {
 		this.maxPlus = maxPlus;
+	}
+
+	public Map<String,List<String>> getValuesForECs() {
+		return valuesForECs;
+	}
+
+	public void setValuesForECs(Map<String,List<String>> valuesForECs) {
+		this.valuesForECs = valuesForECs;
 	}
 
 	@Override
