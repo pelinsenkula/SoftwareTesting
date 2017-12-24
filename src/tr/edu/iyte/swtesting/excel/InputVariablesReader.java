@@ -5,6 +5,7 @@ import java.util.List;
 
 import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
+import tr.edu.iyte.swtesting.utils.Cursor;
 
 public class InputVariablesReader {
 	private ExcelManager excelManager;
@@ -16,16 +17,26 @@ public class InputVariablesReader {
 	public List<InputVariables> read() {
 		List<InputVariables> ivList = new ArrayList<InputVariables>();
 		excelManager.setActiveSheet("Input Variables");
-		Integer i = 2;
-		while (excelManager.cellValue(i, 0).contains("IV")) {
 
-			InputVariables iv = new InputVariables(excelManager.cellValue(0), excelManager.cellValue(1),
-					excelManager.cellValue(5), excelManager.cellValue(6), excelManager.cellValue(7),
-					excelManager.cellValue(8), excelManager.cellValue(9), excelManager.cellValue(10),
-					excelManager.cellValue(11));
+		Cursor cursorIV = new Cursor(2, 0);
+		Cursor cursorValues = new Cursor(2, 5);
+		while (excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex()).contains("IV")) {
+			InputVariables iv = new InputVariables(
+					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex()),
+					excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.getCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()),
+					excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex()));
 			ivList.add(iv);
-			
-			i++;
+
+			cursorIV.nextRowIndex();
+			cursorValues.nextRowIndex();
+			cursorIV.resetCellIndex();
+			cursorValues.resetCellIndex();
 		}
 		return ivList;
 	}
