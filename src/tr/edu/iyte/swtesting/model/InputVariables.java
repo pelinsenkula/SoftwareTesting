@@ -11,8 +11,12 @@ public class InputVariables {
 	private String type;
 	// private String noOfEC;
 	// private String valuesForEcs;
-	private Map<String,String> valuesForECs;
+	private Map<String, String> valuesForECs;
 	private List<String> namesForECs;
+
+	private Map<String, String> invalidValuesForECs;
+	private List<String> invalidNamesForECs;
+
 	private String minMinus;
 	private String min;
 	private String minPlus;
@@ -21,26 +25,31 @@ public class InputVariables {
 	private String max;
 	private String maxPlus;
 
-	public InputVariables(String id, String variable,String type, Map<String,String> valuesForECs,List<String> namesForECs, String minMinus, String min, String minPlus, String nominal,
-			String maxMinus, String max, String maxPlus) {
+	public InputVariables(String id, String variable, String type, Map<String, String> valuesForECs,
+			List<String> namesForECs, Map<String, String> invalidValuesForECs, List<String> invalidNamesForECs,
+			String minMinus, String min, String minPlus, String nominal, String maxMinus, String max, String maxPlus) {
 		setId(id);
 		setVariable(variable);
 		setType(type);
 		setValuesForECs(valuesForECs);
 		setNamesForECs(namesForECs);
+		setInvalidNamesForECs(invalidNamesForECs);
+		setInvalidValuesForECs(invalidValuesForECs);
 		setMinMinus(minMinus);
 		setMin(min);
 		setMinPlus(minPlus);
 		setNominal(nominal);
 		setMaxMinus(maxMinus);
 		setMax(max);
-		setMaxPlus(maxPlus);		
+		setMaxPlus(maxPlus);
 	}
-	
+
+
+
 	public BoundaryValues getBoundaryValues() {
 		return new BoundaryValues(min, minPlus, nominal, maxMinus, max);
 	}
-	
+
 	public RobustBoundaryValues getRobustBoundaryValues() {
 		return new RobustBoundaryValues(minMinus, min, minPlus, nominal, maxMinus, max, maxPlus);
 	}
@@ -117,11 +126,11 @@ public class InputVariables {
 		this.maxPlus = maxPlus;
 	}
 
-	public Map<String,String> getValuesForECs() {
+	public Map<String, String> getValuesForECs() {
 		return valuesForECs;
 	}
 
-	public void setValuesForECs(Map<String,String> valuesForECs) {
+	public void setValuesForECs(Map<String, String> valuesForECs) {
 		this.valuesForECs = valuesForECs;
 	}
 
@@ -140,6 +149,22 @@ public class InputVariables {
 	public void setNamesForECs(List<String> namesForECs) {
 		this.namesForECs = namesForECs;
 	}
+	
+	public Map<String, String> getInvalidValuesForECs() {
+		return invalidValuesForECs;
+	}
+
+	public void setInvalidValuesForECs(Map<String, String> invalidValuesForECs) {
+		this.invalidValuesForECs = invalidValuesForECs;
+	}
+
+	public List<String> getInvalidNamesForECs() {
+		return invalidNamesForECs;
+	}
+
+	public void setInvalidNamesForECs(List<String> invalidNamesForECs) {
+		this.invalidNamesForECs = invalidNamesForECs;
+	}
 
 	@Override
 	public String toString() {
@@ -154,6 +179,10 @@ public class InputVariables {
 		sb.append(Arrays.asList(getNamesForECs()));
 		sb.append(", ECsValues:");
 		sb.append(Arrays.asList(getValuesForECs()));
+		sb.append(", invalidECsNames:");
+		sb.append(Arrays.asList(getInvalidNamesForECs()));
+		sb.append(", invalidECsValues:");
+		sb.append(Arrays.asList(getInvalidValuesForECs()));
 		sb.append(", MIN-:");
 		sb.append(getMinMinus());
 		sb.append(", MIN:");

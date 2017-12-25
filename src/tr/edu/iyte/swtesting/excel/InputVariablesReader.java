@@ -33,6 +33,7 @@ public class InputVariablesReader {
 		Integer inputVariablesCellOffset = null;
 		Integer typesCellOffset = null;
 		Integer ECsAndValuesCellOffset = null;
+		Integer invalidECsAndValuesCellOffset = null;
 		Integer boundaryValuesCellOffset = null;
 
 		Integer valuesRowOffset = 2;
@@ -40,15 +41,18 @@ public class InputVariablesReader {
 		Cursor cursorCellOffset = new Cursor(0, 0);
 		while (boundaryValuesCellOffset == null) {
 			String val = excelManager.cellValue(cursorCellOffset.getRowIndex(), cursorCellOffset.getCellIndex());
-			switch (val) {
+			switch (val.trim()) {
 			case "Input Variables":
 				inputVariablesCellOffset = cursorCellOffset.getCellIndex();
 				break;
 			case "Types":
 				typesCellOffset = cursorCellOffset.getCellIndex();
 				break;
-			case "ECs and Values":
+			case "Valid ECs and Values":
 				ECsAndValuesCellOffset = cursorCellOffset.getCellIndex();
+				break;
+			case "Invalid ECs and Values":
+				invalidECsAndValuesCellOffset = cursorCellOffset.getCellIndex();
 				break;
 			case "Boundary Values":
 				boundaryValuesCellOffset = cursorCellOffset.getCellIndex();
@@ -58,14 +62,21 @@ public class InputVariablesReader {
 				throw new InvalidInputException(
 						"Invalid Excel Input : Boundary Values couldn't found up to cellIndex : 200");
 			}
-			;
+
 		}
 
 		Cursor cursorIV = new CursorBounded(valuesRowOffset, null, inputVariablesCellOffset, typesCellOffset);
 		Cursor cursorType = new CursorBounded(valuesRowOffset, null, typesCellOffset, ECsAndValuesCellOffset);
 
-		Cursor cursorValuesForECs = new CursorBounded(valuesRowOffset, null, ECsAndValuesCellOffset,boundaryValuesCellOffset);
-		Cursor cursorNamesForECs = new CursorBounded(1, valuesRowOffset, ECsAndValuesCellOffset, boundaryValuesCellOffset);
+		Cursor cursorValuesForECs = new CursorBounded(valuesRowOffset, null, ECsAndValuesCellOffset,
+				invalidECsAndValuesCellOffset);
+		Cursor cursorNamesForECs = new CursorBounded(1, valuesRowOffset, ECsAndValuesCellOffset,
+				invalidECsAndValuesCellOffset);
+
+		Cursor cursorInvalidValuesForECs = new CursorBounded(valuesRowOffset, null, invalidECsAndValuesCellOffset,
+				boundaryValuesCellOffset);
+		Cursor cursorInvalidNamesForECs = new CursorBounded(1, valuesRowOffset, invalidECsAndValuesCellOffset,
+				boundaryValuesCellOffset);
 
 		Cursor cursorValues = new Cursor(valuesRowOffset, boundaryValuesCellOffset);
 
@@ -74,19 +85,37 @@ public class InputVariablesReader {
 			String id = excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.getCellIndex());
 			String variable = excelManager.cellValue(cursorIV.getRowIndex(), cursorIV.nextCellIndex());
 			String type = excelManager.cellValue(cursorType.getRowIndex(), cursorType.getCellIndex());
-			
+
 			Map<String, String> valuesForECs = new HashMap<String, String>();
 			List<String> namesForECs = new ArrayList<String>();
 			while (true) {
 				String key = excelManager.cellValue(cursorNamesForECs.getRowIndex(), cursorNamesForECs.getCellIndex());
-				String value = excelManager.cellValue(cursorValuesForECs.getRowIndex(),cursorValuesForECs.getCellIndex());
-				if(!value.trim().equals("")) {
+				String value = excelManager.cellValue(cursorValuesForECs.getRowIndex(),
+						cursorValuesForECs.getCellIndex());
+				if (!value.trim().equals("")) {
 					valuesForECs.put(key, value);
 					namesForECs.add(key);
 				}
 				cursorValuesForECs.nextCellIndex();
-				if(cursorNamesForECs.getCellIndex() > cursorNamesForECs.nextCellIndex()) {
-					break;//break if cursor automatically turns default value
+				if (cursorNamesForECs.getCellIndex() > cursorNamesForECs.nextCellIndex()) {
+					break;// break if cursor automatically turns default value
+				}
+			}
+
+			Map<String, String> invalidValuesForECs = new HashMap<String, String>();
+			List<String> invalidNamesForECs = new ArrayList<String>();
+			while (true) {
+				String key = excelManager.cellValue(cursorInvalidNamesForECs.getRowIndex(),
+						cursorInvalidNamesForECs.getCellIndex());
+				String value = excelManager.cellValue(cursorInvalidValuesForECs.getRowIndex(),
+						cursorInvalidValuesForECs.getCellIndex());
+				if (!value.trim().equals("")) {
+					invalidValuesForECs.put(key, value);
+					invalidNamesForECs.add(key);
+				}
+				cursorInvalidValuesForECs.nextCellIndex();
+				if (cursorInvalidNamesForECs.getCellIndex() > cursorInvalidNamesForECs.nextCellIndex()) {
+					break;// break if cursor automatically turns default value
 				}
 			}
 
@@ -98,31 +127,32 @@ public class InputVariablesReader {
 			String max = excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex());
 			String maxPlus = excelManager.cellValue(cursorValues.getRowIndex(), cursorValues.nextCellIndex());
 
-			ivList.add(new InputVariables(id, variable, type, valuesForECs, namesForECs, minMinus, min, minPlus,
-					nominal, maxMinus, max, maxPlus));
+			ivList.add(new InputVariables(id, variable, type, valuesForECs, namesForECs, invalidValuesForECs, invalidNamesForECs,
+					minMinus, min, minPlus, nominal, maxMinus, max, maxPlus));
 
 			cursorIV.nextRowIndex();
 			cursorType.nextRowIndex();
 			cursorValuesForECs.nextRowIndex();
+			cursorInvalidValuesForECs.nextRowIndex();
 			cursorValues.nextRowIndex();
-			
+
 			cursorIV.resetCellIndex();
 			cursorValues.resetCellIndex();
 		}
 		return ivList;
 	}
-	
+
 	public static void main(String[] args) throws IOException, InvalidInputException {
 
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
 		List<InputVariables> inputVariablesList = new InputVariablesReader(excelManager).read();
-		for(InputVariables i : inputVariablesList) {
+		for (InputVariables i : inputVariablesList) {
 			System.out.println(i);
 		}
 		System.out.println("");
 		excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
 		inputVariablesList = new InputVariablesReader(excelManager).read();
-		for(InputVariables i : inputVariablesList) {
+		for (InputVariables i : inputVariablesList) {
 			System.out.println(i);
 		}
 
