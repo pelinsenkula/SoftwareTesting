@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.excel.InputVariablesReader;
 import tr.edu.iyte.swtesting.excel.TestCaseWriter;
@@ -125,16 +126,22 @@ public class Test {
 
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
-		Bvt bvt = new Bvt(inputVariablesList);
-		WorstCaseBvt worstCasebvt = new WorstCaseBvt(inputVariablesList);
-		RobustBvt robustbvt = new RobustBvt(inputVariablesList);
+		TestingTechnique bvt = new Bvt(inputVariablesList);
+		TestingTechnique worstCasebvt = new WorstCaseBvt(inputVariablesList);
+		TestingTechnique robustbvt = new RobustBvt(inputVariablesList);
+		TestingTechnique strongECT = new StrongECT(inputVariablesList);
+		TestingTechnique weakECT = new WeakECT(inputVariablesList);
 
-		excelManager.writeTestCases("Boundary Value Analysis", bvt.generateBvtTestCases());
-		excelManager.writeTestCases("Robustness Test Cases", robustbvt.generateRobustBvtTestCases());
-		excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt.generateWorstCaseBvtTestCases());
+		excelManager.writeTestCases("Boundary Value Analysis","BVT", bvt);
+		excelManager.writeTestCases("Robustness Test Cases","RT", robustbvt);
+		excelManager.writeTestCases("Strong Equivalance Test Cases","SET", strongECT);
+		excelManager.writeTestCases("Weak Eqivalance Test Cases","WET", weakECT);
+		excelManager.writeTestCases("Worst Case Test Cases","WCT", worstCasebvt);
 		
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);
+		excelManager.close();
+		System.out.println("Test Cases are generated.");
 
 	}
 }

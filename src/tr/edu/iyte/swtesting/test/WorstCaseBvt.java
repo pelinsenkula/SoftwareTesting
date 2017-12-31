@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.utils.ChainCounter;
 
-public class WorstCaseBvt {
+public class WorstCaseBvt implements TestingTechnique {
 
 	private List<InputVariables> inputVariablesList;
 
@@ -16,7 +17,8 @@ public class WorstCaseBvt {
 		this.inputVariablesList = inputVariablesList;
 	}
 
-	public List<Map<String, String>> generateWorstCaseBvtTestCases() {
+	@Override
+	public List<Map<String, String>> generateTestCases() {
 		List<ChainCounter> counters = new ArrayList<>();
 		List<Map<String, String>> testCases = new ArrayList<>();
 
@@ -70,7 +72,7 @@ public class WorstCaseBvt {
 //		 inputVariablesList.add(iv4);
 //
 //		WorstCaseBvt bvt = new WorstCaseBvt(inputVariablesList);
-//		System.out.println(Arrays.asList(bvt.generateWorstCaseBvtTestCases()));
+//		System.out.println(Arrays.asList(bvt.generateTestCases()));
 //	}
 
 }

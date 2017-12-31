@@ -11,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
@@ -27,18 +28,19 @@ public class ExcelManager {
 		testCaseWriter = new TestCaseWriter(this);
 		inputVariablesReader = new InputVariablesReader(this);
 	}
-	
-	public void writeTestCases(String sheetName, List<Map<String, String>> testCases) {
-		testCaseWriter.write(sheetName, testCases);
+
+	public void writeTestCases(String sheetName, String testCasePrefix, TestingTechnique testingTechnique) {
+		List<Map<String, String>> testCases = testingTechnique.generateTestCases();
+		testCaseWriter.write(sheetName, testCasePrefix, testCases);
 	}
-	
+
 	public List<InputVariables> readInputVariables() throws InvalidInputException {
 		return inputVariablesReader.read();
 	}
 
 	public ExcelManager setActiveSheet(String sheetName) {
 		currentSheet = workbook.getSheet(sheetName);
-		if(currentSheet==null) {
+		if (currentSheet == null) {
 			currentSheet = workbook.createSheet(sheetName);
 		}
 		return this;
@@ -67,7 +69,7 @@ public class ExcelManager {
 		} catch (IllegalStateException e) {
 			val = Double.toString(currentCell.getNumericCellValue());
 		}
-//		System.out.println(val);
+		// System.out.println(val);
 		return val;
 	}
 
@@ -83,7 +85,15 @@ public class ExcelManager {
 		return currentCell;
 	}
 
-	public void save(OutputStream outputStream) throws IOException{
+	public void save(OutputStream outputStream) throws IOException {
 		workbook.write(outputStream);
+	}
+	public void close() {
+		try {
+			workbook.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

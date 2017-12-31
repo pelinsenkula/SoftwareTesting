@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
-public class WeakECT {
+public class WeakECT implements TestingTechnique {
 
 	private List<InputVariables> inputVariablesList;
 
@@ -22,7 +22,8 @@ public class WeakECT {
 		this.inputVariablesList = inputVariablesList;
 	}
 
-	public List<Map<String, String>> generateWeakECTestCases() {
+	@Override
+	public List<Map<String, String>> generateTestCases() {
 		List<Integer> sizeList = new ArrayList<>();
 		List<Map<String, String>> testCases = new ArrayList<>();
 
@@ -49,7 +50,7 @@ public class WeakECT {
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
 
 		WeakECT wect = new WeakECT(inputVariablesList);
-		System.out.println(wect.generateWeakECTestCases());
+		System.out.println(wect.generateTestCases());
 	}
 
 }

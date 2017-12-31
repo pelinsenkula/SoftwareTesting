@@ -10,14 +10,15 @@ import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.model.RobustBoundaryValues;
 
-public class RobustBvt extends Bvt{
+public class RobustBvt extends Bvt {
 
 	public RobustBvt(List<InputVariables> inputVariablesList) {
 		super(inputVariablesList);
 	}
 
-	public List<Map<String,String>> generateRobustBvtTestCases() {
-		List<Map<String,String>> testCases = super.generateBvtTestCases();
+	@Override
+	public List<Map<String,String>> generateTestCases() {
+		List<Map<String,String>> testCases = super.generateTestCases();
 		Map<String,String> testCase = new HashMap<String,String>();
 		String id;		
 		for(int i=0; i<getInputVariablesList().size();i++) {	

@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.utils.ChainCounter;
 
-public class StrongECT {
+public class StrongECT implements TestingTechnique {
 
 	private List<InputVariables> inputVariablesList;
 
@@ -22,7 +22,8 @@ public class StrongECT {
 		this.inputVariablesList = inputVariablesList;
 	}
 	
-	public List<Map<String, String>> generateStrongECTestCases() {
+	@Override
+	public List<Map<String, String>> generateTestCases() {
 		List<Map<String, String>> testCases = new ArrayList<>();
 		List<ChainCounter> counters = new ArrayList<>();
 		ChainCounter c1 = null;
@@ -50,6 +51,6 @@ public class StrongECT {
 	public static void main(String[] args) throws tr.edu.iyte.swtesting.exception.InvalidInputException, FileNotFoundException, IOException {
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
-		System.out.println(Arrays.asList(new StrongECT(inputVariablesList).generateStrongECTestCases()));
+		System.out.println(Arrays.asList(new StrongECT(inputVariablesList).generateTestCases()));
 	}
 }
