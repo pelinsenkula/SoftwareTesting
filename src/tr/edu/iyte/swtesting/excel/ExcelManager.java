@@ -67,7 +67,7 @@ public class ExcelManager {
 		try {
 			val = currentCell.getStringCellValue();
 		} catch (IllegalStateException e) {
-			val = Double.toString(currentCell.getNumericCellValue());
+			val = currentCell.getRawValue();
 		}
 		// System.out.println(val);
 		return val;

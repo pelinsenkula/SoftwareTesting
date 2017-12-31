@@ -126,17 +126,20 @@ public class Test {
 
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
+		
 		TestingTechnique bvt = new Bvt(inputVariablesList);
 		TestingTechnique worstCasebvt = new WorstCaseBvt(inputVariablesList);
 		TestingTechnique robustbvt = new RobustBvt(inputVariablesList);
 		TestingTechnique strongECT = new StrongECT(inputVariablesList);
 		TestingTechnique weakECT = new WeakECT(inputVariablesList);
-
+		TestingTechnique traditionalECT = new TraditionalECT(inputVariablesList);
+		
 		excelManager.writeTestCases("Boundary Value Analysis","BVT", bvt);
 		excelManager.writeTestCases("Robustness Test Cases","RT", robustbvt);
 		excelManager.writeTestCases("Strong Equivalance Test Cases","SET", strongECT);
 		excelManager.writeTestCases("Weak Eqivalance Test Cases","WET", weakECT);
 		excelManager.writeTestCases("Worst Case Test Cases","WCT", worstCasebvt);
+		excelManager.writeTestCases("Traditional Equivalence", "TR", traditionalECT);
 		
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);

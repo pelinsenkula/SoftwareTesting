@@ -35,13 +35,13 @@ public class StrongECT implements TestingTechnique {
 		while (!counters.get(0).isChainFinished()) {
 			Map<String, String> testCase = new HashMap<>();
 			for (int i = 0; i < inputVariablesList.size(); i++) {
-				 System.out.print(counters.get(i).value() + " ");
+//				 System.out.print(counters.get(i).value() + " ");
 				 String key = inputVariablesList.get(i).getNamesForECs()
 							.get(counters.get(i).value());
 					testCase.put(inputVariablesList.get(i).getId(), inputVariablesList.get(i).getValuesForECs().get(key));
 			}
 			testCases.add(testCase);
-			System.out.println();
+//			System.out.println();
 			counters.get(counters.size() - 1).increment();
 		}
 		
