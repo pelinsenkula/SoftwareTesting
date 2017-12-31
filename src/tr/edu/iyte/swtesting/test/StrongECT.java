@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.model.InputVariables;
@@ -48,7 +47,7 @@ public class StrongECT {
 		return testCases;
 	}
 	
-	public static void main(String[] args) throws InvalidInputException, FileNotFoundException, IOException {
+	public static void main(String[] args) throws tr.edu.iyte.swtesting.exception.InvalidInputException, FileNotFoundException, IOException {
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
 		System.out.println(Arrays.asList(new StrongECT(inputVariablesList).generateStrongECTestCases()));

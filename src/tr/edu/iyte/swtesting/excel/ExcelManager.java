@@ -10,8 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.eclipse.jdt.core.compiler.InvalidInputException;
 
+import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
 public class ExcelManager {

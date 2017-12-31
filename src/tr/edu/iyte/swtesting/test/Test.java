@@ -21,11 +21,11 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.eclipse.jdt.core.compiler.InvalidInputException;
 
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.excel.InputVariablesReader;
 import tr.edu.iyte.swtesting.excel.TestCaseWriter;
+import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
 
 @ManagedBean(name = "testing")
@@ -123,7 +123,7 @@ public class Test {
 
 	public static void main(String[] args) throws IOException, InvalidInputException {
 
-		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\triangleInput.xlsx"));
+		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
 		Bvt bvt = new Bvt(inputVariablesList);
 		WorstCaseBvt worstCasebvt = new WorstCaseBvt(inputVariablesList);

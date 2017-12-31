@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.compiler.InvalidInputException;
-
+import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.test.Bvt;
