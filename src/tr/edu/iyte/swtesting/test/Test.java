@@ -32,7 +32,7 @@ import tr.edu.iyte.swtesting.model.InputVariables;
 @ManagedBean(name = "testing")
 @ViewScoped
 public class Test {
-
+	
 	private String test;
 	private Part file;
 
