@@ -22,7 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import tr.edu.iyte.swtesting.contract.TestingTechnique;
+import tr.edu.iyte.swtesting.contract.TestCaseGenerator;
 import tr.edu.iyte.swtesting.excel.ExcelManager;
 import tr.edu.iyte.swtesting.excel.InputVariablesReader;
 import tr.edu.iyte.swtesting.excel.TestCaseWriter;
@@ -127,19 +127,19 @@ public class Test {
 		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
 		
-		TestingTechnique bvt = new Bvt(inputVariablesList);
-		TestingTechnique worstCasebvt = new WorstCaseBvt(inputVariablesList);
-		TestingTechnique robustbvt = new RobustBvt(inputVariablesList);
-		TestingTechnique strongECT = new StrongECT(inputVariablesList);
-		TestingTechnique weakECT = new WeakECT(inputVariablesList);
-		TestingTechnique traditionalECT = new TraditionalECT(inputVariablesList);
+		TestCaseGenerator bvt = new Bvt(inputVariablesList,"BVT");
+		TestCaseGenerator worstCasebvt = new WorstCaseBvt(inputVariablesList,"WCT");
+		TestCaseGenerator robustbvt = new RobustBvt(inputVariablesList,"RT");
+		TestCaseGenerator strongECT = new StrongECT(inputVariablesList,"SET");
+		TestCaseGenerator weakECT = new WeakECT(inputVariablesList,"WET");
+		TestCaseGenerator traditionalECT = new TraditionalECT(inputVariablesList, "TR");
 		
-		excelManager.writeTestCases("Boundary Value Analysis","BVT", bvt);
-		excelManager.writeTestCases("Robustness Test Cases","RT", robustbvt);
-		excelManager.writeTestCases("Strong Equivalance Test Cases","SET", strongECT);
-		excelManager.writeTestCases("Weak Eqivalance Test Cases","WET", weakECT);
-		excelManager.writeTestCases("Worst Case Test Cases","WCT", worstCasebvt);
-		excelManager.writeTestCases("Traditional Equivalence", "TR", traditionalECT);
+		excelManager.writeTestCases("Boundary Value Analysis", bvt);
+		excelManager.writeTestCases("Robustness Test Cases", robustbvt);
+		excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);
+		excelManager.writeTestCases("Weak Eqivalance Test Cases", weakECT);
+		excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt);
+		excelManager.writeTestCases("Traditional Equivalence", traditionalECT);
 		
 		System.out.println(excelManager.readTestCases("Boundary Value Analysis", "BVT"));
 		System.out.println(excelManager.readTestCases("Robustness Test Cases","RT"));

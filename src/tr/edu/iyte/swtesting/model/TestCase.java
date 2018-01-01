@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class TestCase {
 
-	private String testCaseNo;
+	private String testCaseNo="";
 	private List<InputVariable> inputValues = new ArrayList<>();
-	private String expected;
-	private String observed;
+	private String expected="";
+	private String observed="";
 
 	public TestCase(String testCaseNo) {
 		setTestCaseNo(testCaseNo);
@@ -48,6 +48,15 @@ public class TestCase {
 		return getExpected().equals(getObserved());
 	}
 
+	public String getValue(String variableId) {
+		for(InputVariable iv:inputValues) {
+			if(iv.getVariableId().equals(variableId)) {
+				return iv.value;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

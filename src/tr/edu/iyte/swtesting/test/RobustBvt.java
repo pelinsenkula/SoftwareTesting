@@ -9,16 +9,20 @@ import java.util.Map;
 import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.model.RobustBoundaryValues;
+import tr.edu.iyte.swtesting.model.TestCase;
 
 public class RobustBvt extends Bvt {
 
-	public RobustBvt(List<InputVariables> inputVariablesList) {
-		super(inputVariablesList);
+	private String testCasePrefix;
+
+	public RobustBvt(List<InputVariables> inputVariablesList, String testCasePrefix) {
+		super(inputVariablesList,testCasePrefix);
+		this.testCasePrefix = testCasePrefix;
 	}
 
-	@Override
-	public List<Map<String,String>> generateTestCases() {
-		List<Map<String,String>> testCases = super.generateTestCases();
+	@Deprecated
+	public List<Map<String,String>> generateRobustBVTTestCases() {
+		List<Map<String,String>> testCases = super.generateBVTTestCases();
 		Map<String,String> testCase = new HashMap<String,String>();
 		String id;		
 		for(int i=0; i<getInputVariablesList().size();i++) {	
@@ -47,6 +51,21 @@ public class RobustBvt extends Bvt {
 		
 		return testCases;
 		
+	}
+	
+	@Override
+	public List<TestCase> generateTestCases() {
+		List<Map<String, String>> _testCases = generateRobustBVTTestCases();
+		List<TestCase> testCases = new ArrayList<>();
+		Integer i=1;
+		for(Map<String, String> _testCase:_testCases) {
+			TestCase testCase = new TestCase(testCasePrefix+(i++));
+			for(String key:_testCase.keySet()) {
+				testCase.addInputValue(key, _testCase.get(key));
+			}
+			testCases.add(testCase);
+		}
+		return testCases;
 	}
 	
 //	public static void main(String[] args) {

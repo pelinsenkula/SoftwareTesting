@@ -5,20 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import tr.edu.iyte.swtesting.contract.TestingTechnique;
+import tr.edu.iyte.swtesting.contract.TestCaseGenerator;
 import tr.edu.iyte.swtesting.model.InputVariables;
+import tr.edu.iyte.swtesting.model.TestCase;
 import tr.edu.iyte.swtesting.utils.ChainCounter;
 
-public class WorstCaseBvt implements TestingTechnique {
+public class WorstCaseBvt implements TestCaseGenerator {
 
 	private List<InputVariables> inputVariablesList;
+	private String testCasePrefix;
 
-	public WorstCaseBvt(List<InputVariables> inputVariablesList) {
+	public WorstCaseBvt(List<InputVariables> inputVariablesList, String testCasePrefix) {
 		this.inputVariablesList = inputVariablesList;
+		this.testCasePrefix = testCasePrefix;
 	}
 
-	@Override
-	public List<Map<String, String>> generateTestCases() {
+	@Deprecated
+	public List<Map<String, String>> generateWorstCaseBVTTestCases() {
 		List<ChainCounter> counters = new ArrayList<>();
 		List<Map<String, String>> testCases = new ArrayList<>();
 
@@ -58,7 +61,20 @@ public class WorstCaseBvt implements TestingTechnique {
 		return testCases;
 
 	}
-
+	@Override
+	public List<TestCase> generateTestCases() {
+		List<Map<String, String>> _testCases = generateWorstCaseBVTTestCases();
+		List<TestCase> testCases = new ArrayList<>();
+		Integer i = 1;
+		for (Map<String, String> _testCase : _testCases) {
+			TestCase testCase = new TestCase(testCasePrefix + (i++));
+			for (String key : _testCase.keySet()) {
+				testCase.addInputValue(key, _testCase.get(key));
+			}
+			testCases.add(testCase);
+		}
+		return testCases;
+	}
 //	public static void main(String[] args) {
 //		InputVariables iv = new InputVariables("a", "a", "0", "1", "2", "100", "199", "200", "201");
 //		InputVariables iv2 = new InputVariables("b", "b", "0", "1", "2", "100", "199", "200", "201");

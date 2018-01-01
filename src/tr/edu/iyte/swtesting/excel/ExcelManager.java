@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import tr.edu.iyte.swtesting.contract.TestingTechnique;
+import tr.edu.iyte.swtesting.contract.TestCaseGenerator;
 import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.model.TestCase;
@@ -32,9 +32,9 @@ public class ExcelManager {
 		testCaseReader = new TestCaseReader(this);
 	}
 
-	public void writeTestCases(String sheetName, String testCasePrefix, TestingTechnique testingTechnique) {
-		List<Map<String, String>> testCases = testingTechnique.generateTestCases();
-		testCaseWriter.write(sheetName, testCasePrefix, testCases);
+	public void writeTestCases(String sheetName, TestCaseGenerator testingTechnique) {
+		List<TestCase> testCases = testingTechnique.generateTestCases();
+		testCaseWriter.write2(sheetName, testCases);
 	}
 
 	public List<TestCase> readTestCases(String sheetName,String testCasePrefix){

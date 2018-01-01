@@ -8,19 +8,21 @@ import java.util.Map;
 
 import tr.edu.iyte.swtesting.model.BoundaryValues;
 import tr.edu.iyte.swtesting.model.InputVariables;
-import tr.edu.iyte.swtesting.contract.TestingTechnique;
+import tr.edu.iyte.swtesting.model.TestCase;
+import tr.edu.iyte.swtesting.contract.TestCaseGenerator;
 
-public class Bvt implements TestingTechnique {
+public class Bvt implements TestCaseGenerator {
 	private Map<String, String> nominalValues;
 	private List<InputVariables> inputVariablesList;
-
-	public Bvt(List<InputVariables> inputVariablesList) {
+	private String testCasePrefix;
+	public Bvt(List<InputVariables> inputVariablesList,String testCasePrefix) {
 		this.inputVariablesList = inputVariablesList;
 		this.nominalValues = calculateNominalValues(inputVariablesList);
+		this.testCasePrefix = testCasePrefix;
 	}
 
-	@Override
-	public List<Map<String, String>> generateTestCases() {
+	@Deprecated
+	public List<Map<String, String>> generateBVTTestCases() {
 		String id;
 		Map<String, String> testCase = new HashMap<String, String>();
 		List<Map<String, String>> testCases = new ArrayList<Map<String, String>>();
@@ -98,6 +100,21 @@ public class Bvt implements TestingTechnique {
 
 	public void setInputVariablesList(List<InputVariables> inputVariablesList) {
 		this.inputVariablesList = inputVariablesList;
+	}
+
+	@Override
+	public List<TestCase> generateTestCases() {
+		List<Map<String, String>> _testCases = generateBVTTestCases();
+		List<TestCase> testCases = new ArrayList<>();
+		Integer i=1;
+		for(Map<String, String> _testCase:_testCases) {
+			TestCase testCase = new TestCase(testCasePrefix+(i++));
+			for(String key:_testCase.keySet()) {
+				testCase.addInputValue(key, _testCase.get(key));
+			}
+			testCases.add(testCase);
+		}
+		return testCases;
 	}
 
 	// public static void main(String[] args) {
