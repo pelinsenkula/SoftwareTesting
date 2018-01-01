@@ -143,6 +143,8 @@ public class Test {
 		ProblemTester.testNextDateProblem(weakECT);
 		ProblemTester.testNextDateProblem(traditionalECT);
 		
+//		ProblemTester.testTriangleProblem(testCases);
+		
 		excelManager.writeTestCases("Boundary Value Analysis", bvt);
 		excelManager.writeTestCases("Robustness Test Cases", robustbvt);
 		excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);

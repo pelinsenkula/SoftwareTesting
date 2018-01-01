@@ -4,6 +4,7 @@ import java.util.List;
 
 import tr.edu.iyte.swtesting.model.TestCase;
 import tr.edu.iyte.swtesting.problems.NextDateProblem;
+import tr.edu.iyte.swtesting.problems.TriangleProblem;
 
 public class ProblemTester {
 
@@ -15,6 +16,22 @@ public class ProblemTester {
 			try {
 				NextDateProblem today = new NextDateProblem(m, d, y);
 				String observed = today.next().toString();
+				testCase.setObserved(observed);
+			} catch (RuntimeException e) {
+				testCase.setObserved(e.getMessage());
+			}
+			testCase.tested();
+		}
+	}
+	
+	public static void testTriangleProblem(List<TestCase> testCases) {
+		for (TestCase testCase : testCases) {
+			Integer a = Integer.parseInt(testCase.getValue("IV1"));
+			Integer b = Integer.parseInt(testCase.getValue("IV2"));
+			Integer c = Integer.parseInt(testCase.getValue("IV3"));
+			try {
+				TriangleProblem triangle = new TriangleProblem();
+				String observed = triangle.tri_type(a, b, c);
 				testCase.setObserved(observed);
 			} catch (RuntimeException e) {
 				testCase.setObserved(e.getMessage());
