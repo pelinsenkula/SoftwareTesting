@@ -34,7 +34,7 @@ public class ExcelManager {
 
 	public void writeTestCases(String sheetName, TestCaseGenerator testingTechnique) {
 		List<TestCase> testCases = testingTechnique.generateTestCases();
-		testCaseWriter.write2(sheetName, testCases);
+		testCaseWriter.write(sheetName, testCases);
 	}
 
 	public List<TestCase> readTestCases(String sheetName,String testCasePrefix){
