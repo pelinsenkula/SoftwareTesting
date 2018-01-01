@@ -24,6 +24,9 @@ public class NextDateProblem {
 		}
 		if (d < 1 || d > DAYS[m]) {
 			return false;
+		}		
+		if (y < 1812 || y > 2012) {
+			return false;
 		}
 		if (m == 2 && d == 29 && !isLeapYear(y)) {
 			return false;
@@ -83,9 +86,9 @@ public class NextDateProblem {
 
 	// sample client for testing
 	public static void main(String[] args) {
-		NextDateProblem today = new NextDateProblem(12, 32, 2005);
+		NextDateProblem today = new NextDateProblem(04,16, 1811);
 		System.out.println(today);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			today = today.next();
 			System.out.println(today);
 		}
