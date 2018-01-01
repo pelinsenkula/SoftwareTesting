@@ -141,6 +141,13 @@ public class Test {
 		excelManager.writeTestCases("Worst Case Test Cases","WCT", worstCasebvt);
 		excelManager.writeTestCases("Traditional Equivalence", "TR", traditionalECT);
 		
+		System.out.println(excelManager.readTestCases("Boundary Value Analysis", "BVT"));
+		System.out.println(excelManager.readTestCases("Robustness Test Cases","RT"));
+		System.out.println(excelManager.readTestCases("Strong Equivalance Test Cases","SET"));
+		System.out.println(excelManager.readTestCases("Weak Eqivalance Test Cases","WET"));
+		System.out.println(excelManager.readTestCases("Worst Case Test Cases","WCT"));
+		System.out.println(excelManager.readTestCases("Traditional Equivalence", "TR"));
+		
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);
 		excelManager.close();

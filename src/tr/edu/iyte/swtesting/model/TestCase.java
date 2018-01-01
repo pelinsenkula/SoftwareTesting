@@ -9,7 +9,8 @@ public class TestCase {
 
 	private String testCaseNo;
 	private List<InputVariable> inputValues = new ArrayList<>();
-	private List<OutputPairValues> outputValues = new ArrayList<>();
+	private String expected;
+	private String observed;
 
 	public TestCase(String testCaseNo) {
 		setTestCaseNo(testCaseNo);
@@ -22,55 +23,48 @@ public class TestCase {
 	public String getTestCaseNo() {
 		return testCaseNo;
 	}
-	
+
 	public void addInputValue(String variableId, String value) {
 		inputValues.add(new InputVariable(variableId, value));
 	}
-	
-	public void addOutputValue(String expected, String observed) {
-		outputValues.add(new OutputPairValues(expected, observed));
+
+	public String getExpected() {
+		return expected;
 	}
 
-	private class OutputPairValues {
-		private String expected;
-		private String observed;
-
-		private OutputPairValues(String expected, String observed) {
-			setExpected(expected);
-			setObserved(observed);
-		}
-
-		private String getExpected() {
-			return expected;
-		}
-
-		private void setExpected(String expected) {
-			this.expected = expected;
-		}
-
-		private String getObserved() {
-			return observed;
-		}
-
-		private void setObserved(String observed) {
-			this.observed = observed;
-		}
-		
-		private Boolean isTestDone() {
-			return false;
-		}
+	public void setExpected(String expected) {
+		this.expected = expected;
 	}
 
-	private class InputVariable {
+	public String getObserved() {
+		return observed;
+	}
+
+	public void setObserved(String observed) {
+		this.observed = observed;
+	}
+
+	public Boolean isTestPass() {
+		return getExpected().equals(getObserved());
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "{testCaseNo:" + testCaseNo + ", inputValues:" + inputValues + ", expected:" + expected + ", observed:"
+				+ observed + "}\n";
+	}
+
+	public class InputVariable {
 		private String variableId;
 		private String value;
 
-		private InputVariable(String variableId, String value) {
+		public InputVariable(String variableId, String value) {
 			setVariableId(variableId);
 			setValue(value);
 		}
 
-		private String getVariableId() {
+		public String getVariableId() {
 			return variableId;
 		}
 
@@ -78,12 +72,18 @@ public class TestCase {
 			this.variableId = variableId;
 		}
 
-		private String getValue() {
+		public String getValue() {
 			return value;
 		}
 
 		private void setValue(String value) {
 			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return "[vid:" + variableId + " ,value:" + value + " ]";
 		}
 	}
 }

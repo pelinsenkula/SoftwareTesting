@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tr.edu.iyte.swtesting.contract.TestingTechnique;
 import tr.edu.iyte.swtesting.exception.InvalidInputException;
 import tr.edu.iyte.swtesting.model.InputVariables;
+import tr.edu.iyte.swtesting.model.TestCase;
 
 public class ExcelManager {
 	private XSSFWorkbook workbook;
@@ -22,16 +23,22 @@ public class ExcelManager {
 	private XSSFCell currentCell;
 	private TestCaseWriter testCaseWriter;
 	private InputVariablesReader inputVariablesReader;
+	private TestCaseReader testCaseReader;
 
 	public ExcelManager(InputStream inputStream) throws IOException {
 		workbook = new XSSFWorkbook(inputStream);
 		testCaseWriter = new TestCaseWriter(this);
 		inputVariablesReader = new InputVariablesReader(this);
+		testCaseReader = new TestCaseReader(this);
 	}
 
 	public void writeTestCases(String sheetName, String testCasePrefix, TestingTechnique testingTechnique) {
 		List<Map<String, String>> testCases = testingTechnique.generateTestCases();
 		testCaseWriter.write(sheetName, testCasePrefix, testCases);
+	}
+
+	public List<TestCase> readTestCases(String sheetName,String testCasePrefix){
+		return testCaseReader.read(sheetName, testCasePrefix);
 	}
 
 	public List<InputVariables> readInputVariables() throws InvalidInputException {
@@ -88,6 +95,7 @@ public class ExcelManager {
 	public void save(OutputStream outputStream) throws IOException {
 		workbook.write(outputStream);
 	}
+
 	public void close() {
 		try {
 			workbook.close();
