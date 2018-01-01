@@ -11,6 +11,15 @@ public class TestCase {
 	private List<InputVariable> inputValues = new ArrayList<>();
 	private String expected="";
 	private String observed="";
+	private Boolean tested = false;
+
+	public Boolean isTested() {
+		return tested;
+	}
+
+	public void tested() {
+		this.tested = true;
+	}
 
 	public TestCase(String testCaseNo) {
 		setTestCaseNo(testCaseNo);

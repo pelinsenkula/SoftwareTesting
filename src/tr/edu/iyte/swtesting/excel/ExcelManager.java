@@ -36,6 +36,10 @@ public class ExcelManager {
 		List<TestCase> testCases = testingTechnique.generateTestCases();
 		testCaseWriter.write(sheetName, testCases);
 	}
+	
+	public void writeTestCases(String sheetName, List<TestCase> testCases) {
+		testCaseWriter.write(sheetName, testCases);
+	}
 
 	public List<TestCase> readTestCases(String sheetName,String testCasePrefix){
 		return testCaseReader.read(sheetName, testCasePrefix);
