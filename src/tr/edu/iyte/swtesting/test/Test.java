@@ -38,7 +38,7 @@ public class Test {
 
 	private String message = "Message Field";
 	private Part file;
-	private Boolean testNextDateProblem = true;
+	private String selectedProblem = "";
 
 	public Part getFile() {
 		return file;
@@ -50,6 +50,14 @@ public class Test {
 
 	public Test() {
 
+	}
+
+	public String getSelectedProblem() {
+		return selectedProblem;
+	}
+
+	public void setSelectedProblem(String selectedProblem) {
+		this.selectedProblem = selectedProblem;
 	}
 
 	public String getMessage() {
@@ -152,14 +160,21 @@ public class Test {
 			List<TestCase> weakECT = excelManager.readTestCases("Weak Eqivalance Test Cases", "WET");
 			List<TestCase> traditionalECT = excelManager.readTestCases("Traditional Equivalence", "TR");
 
-			if (testNextDateProblem) {
+			if (selectedProblem.equals("nextdate")) {
 				ProblemTester.testNextDateProblem(bvt);
 				ProblemTester.testNextDateProblem(worstCasebvt);
 				ProblemTester.testNextDateProblem(robustbvt);
 				ProblemTester.testNextDateProblem(strongECT);
 				ProblemTester.testNextDateProblem(weakECT);
 				ProblemTester.testNextDateProblem(traditionalECT);
-			}else {
+				System.out.println("Nextdate problem.");
+			}else if(selectedProblem.equals("triangle")){
+				ProblemTester.testTriangleProblem(bvt);
+				ProblemTester.testTriangleProblem(worstCasebvt);
+				ProblemTester.testTriangleProblem(robustbvt);
+				ProblemTester.testTriangleProblem(strongECT);
+				ProblemTester.testTriangleProblem(weakECT);
+				ProblemTester.testTriangleProblem(traditionalECT);
 				System.out.println("Triangle problem.");
 			}
 

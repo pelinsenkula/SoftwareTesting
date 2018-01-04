@@ -13,7 +13,11 @@
 <body>
 	<h:form id="form" enctype="multipart/form-data" prependId="false">
 		<h:inputFile id="file" value="#{testing.file}"></h:inputFile>
-		<h:commandButton value="Upload" action="#{testing.uploadTestCases()}" ></h:commandButton>
+		<h:selectOneRadio value="#{testing.selectedProblem}">
+			<f:selectItem itemValue="nextdate" itemLabel="Next date Problem" />
+			<f:selectItem itemValue="triangle" itemLabel="Triangle Problem" />
+		</h:selectOneRadio>
+		<h:commandButton value="Upload" action="#{testing.uploadTestCases()}"></h:commandButton>
 
 	</h:form>
 	<h:outputLabel>#{testing.message}</h:outputLabel>
