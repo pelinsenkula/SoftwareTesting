@@ -13,10 +13,8 @@
 <body>
 	<h:form id="form" enctype="multipart/form-data" prependId="false">
 		<h:inputFile id="file" value="#{testing.file}"></h:inputFile>
-		<h:commandButton value="Upload" action="#{testing.uploadInputVariables()}" ></h:commandButton>
+		<h:commandButton value="Upload" action="#{testing.uploadTestCases()}" ></h:commandButton>
 
-		<h:commandButton value="download" type="submit"
-			action="#{testing.download()}" />
 	</h:form>
 	<h:outputLabel>#{testing.message}</h:outputLabel>
 </body>

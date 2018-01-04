@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,9 @@ import tr.edu.iyte.swtesting.problems.NextDateProblem;
 @ViewScoped
 public class Test {
 
-	private String test;
+	private String message = "Message Field";
 	private Part file;
+	private Boolean testNextDateProblem = true;
 
 	public Part getFile() {
 		return file;
@@ -50,12 +52,12 @@ public class Test {
 
 	}
 
-	public String getTest() {
-		return test;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setTest(String test) {
-		this.test = test;
+	public void setMessage(String info) {
+		this.message = info;
 	}
 
 	public void download() throws IOException {
@@ -108,56 +110,143 @@ public class Test {
 
 	}
 
-	public void upload() {
-		System.out.println("uploaded!");
-		XSSFWorkbook workbook;
+	public void generateTestCases(InputStream inputStream, OutputStream outputStream) {
+		ExcelManager excelManager;
 		try {
-			workbook = new XSSFWorkbook(file.getInputStream());
-			XSSFSheet worksheet = workbook.getSheet("Employee Info");
-			XSSFRow row1 = worksheet.getRow(0);
-			XSSFCell cellA1 = row1.getCell((short) 0);
-			System.out.println(cellA1.getStringCellValue());
+			excelManager = new ExcelManager(inputStream);
+			List<InputVariables> inputVariablesList = excelManager.readInputVariables();
+			List<TestCase> bvt = new Bvt(inputVariablesList, "BVT").generateTestCases();
+			List<TestCase> worstCasebvt = new WorstCaseBvt(inputVariablesList, "WCT").generateTestCases();
+			List<TestCase> robustbvt = new RobustBvt(inputVariablesList, "RT").generateTestCases();
+			List<TestCase> strongECT = new StrongECT(inputVariablesList, "SET").generateTestCases();
+			List<TestCase> weakECT = new WeakECT(inputVariablesList, "WET").generateTestCases();
+			List<TestCase> traditionalECT = new TraditionalECT(inputVariablesList, "TR").generateTestCases();
 
+			excelManager.writeTestCases("Boundary Value Analysis", bvt);
+			excelManager.writeTestCases("Robustness Test Cases", robustbvt);
+			excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);
+			excelManager.writeTestCases("Weak Eqivalance Test Cases", weakECT);
+			excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt);
+			excelManager.writeTestCases("Traditional Equivalence", traditionalECT);
+
+			excelManager.save(outputStream);
+			excelManager.close();
+			outputStream.close();
+			setMessage("Excel dosyasý baþarýlý bir þekilde yüklendi.\n Testcaseler uretildi.");
+
+		} catch (IOException | InvalidInputException e1) {
+			// TODO Auto-generated catch block
+			setMessage(e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	public void readAndTestTestCases(InputStream inputStream, OutputStream outputStream) {
+		ExcelManager excelManager;
+		try {
+			excelManager = new ExcelManager(inputStream);
+			List<TestCase> bvt = excelManager.readTestCases("Boundary Value Analysis", "BVT");
+			List<TestCase> worstCasebvt = excelManager.readTestCases("Worst Case Test Cases", "WCT");
+			List<TestCase> robustbvt = excelManager.readTestCases("Robustness Test Cases", "RT");
+			List<TestCase> strongECT = excelManager.readTestCases("Strong Equivalance Test Cases", "SET");
+			List<TestCase> weakECT = excelManager.readTestCases("Weak Eqivalance Test Cases", "WET");
+			List<TestCase> traditionalECT = excelManager.readTestCases("Traditional Equivalence", "TR");
+
+			if (testNextDateProblem) {
+				ProblemTester.testNextDateProblem(bvt);
+				ProblemTester.testNextDateProblem(worstCasebvt);
+				ProblemTester.testNextDateProblem(robustbvt);
+				ProblemTester.testNextDateProblem(strongECT);
+				ProblemTester.testNextDateProblem(weakECT);
+				ProblemTester.testNextDateProblem(traditionalECT);
+			}else {
+				System.out.println("Triangle problem.");
+			}
+
+			excelManager.writeTestCases("Boundary Value Analysis", bvt);
+			excelManager.writeTestCases("Robustness Test Cases", robustbvt);
+			excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);
+			excelManager.writeTestCases("Weak Eqivalance Test Cases", weakECT);
+			excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt);
+			excelManager.writeTestCases("Traditional Equivalence", traditionalECT);
+
+			excelManager.save(outputStream);
+			excelManager.close();
+			outputStream.close();
+			setMessage("Excel dosyasý baþarýlý bir þekilde yüklendi.\n Testler yapýldý.");
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			setMessage(e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	public void uploadInputVariables() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		ec.responseReset();
+		ec.setResponseContentType("vnd.ms-excel");
+		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"output.xlsx\"");
+		try {
+			generateTestCases(getFile().getInputStream(), ec.getResponseOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setMessage(e.getMessage() + getMessage());
 		}
+		fc.responseComplete();
+
+	}
+
+	public void uploadTestCases() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		ec.responseReset();
+		ec.setResponseContentType("vnd.ms-excel");
+		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"output.xlsx\"");
+		try {
+			readAndTestTestCases(getFile().getInputStream(), ec.getResponseOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			setMessage(e.getMessage() + getMessage());
+		}
+		fc.responseComplete();
 	}
 
 	public static void main(String[] args) throws IOException, InvalidInputException {
 
-		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput.xlsx"));
+		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput_prepared.xlsx"));
 		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
-
-		List<TestCase> bvt = new Bvt(inputVariablesList, "BVT").generateTestCases();
-		List<TestCase> worstCasebvt = new WorstCaseBvt(inputVariablesList, "WCT").generateTestCases();
-		List<TestCase> robustbvt = new RobustBvt(inputVariablesList, "RT").generateTestCases();
-		List<TestCase> strongECT = new StrongECT(inputVariablesList, "SET").generateTestCases();
-		List<TestCase> weakECT = new WeakECT(inputVariablesList, "WET").generateTestCases();
-		List<TestCase> traditionalECT = new TraditionalECT(inputVariablesList, "TR").generateTestCases();
-
-		ProblemTester.testNextDateProblem(bvt);
-		ProblemTester.testNextDateProblem(worstCasebvt);
-		ProblemTester.testNextDateProblem(robustbvt);
-		ProblemTester.testNextDateProblem(strongECT);
-		ProblemTester.testNextDateProblem(weakECT);
-		ProblemTester.testNextDateProblem(traditionalECT);
 		
-//		ProblemTester.testTriangleProblem(testCases);
 		
+		
+		// List<TestCase> bvt = new Bvt(inputVariablesList, "BVT").generateTestCases();
+		// List<TestCase> worstCasebvt = new WorstCaseBvt(inputVariablesList,
+		// "WCT").generateTestCases();
+		// List<TestCase> robustbvt = new RobustBvt(inputVariablesList,
+		// "RT").generateTestCases();
+		// List<TestCase> strongECT = new StrongECT(inputVariablesList,
+		// "SET").generateTestCases();
+		// List<TestCase> weakECT = new WeakECT(inputVariablesList,
+		// "WET").generateTestCases();
+		// List<TestCase> traditionalECT = new TraditionalECT(inputVariablesList,
+		// "TR").generateTestCases();
+
+		List<TestCase> bvt = excelManager.readTestCases("Boundary Value Analysis", "BVT");
+		List<TestCase> worstCasebvt = excelManager.readTestCases("Worst Case Test Cases", "WCT");
+		List<TestCase> robustbvt = excelManager.readTestCases("Robustness Test Cases", "RT");
+		List<TestCase> strongECT = excelManager.readTestCases("Strong Equivalance Test Cases", "SET");
+		List<TestCase> weakECT = excelManager.readTestCases("Weak Eqivalance Test Cases", "WET");
+		List<TestCase> traditionalECT = excelManager.readTestCases("Traditional Equivalence", "TR");
+
+		// ProblemTester.testTriangleProblem(testCases);
+
 		excelManager.writeTestCases("Boundary Value Analysis", bvt);
 		excelManager.writeTestCases("Robustness Test Cases", robustbvt);
 		excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);
 		excelManager.writeTestCases("Weak Eqivalance Test Cases", weakECT);
 		excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt);
 		excelManager.writeTestCases("Traditional Equivalence", traditionalECT);
-
-		System.out.println(excelManager.readTestCases("Boundary Value Analysis", "BVT"));
-		System.out.println(excelManager.readTestCases("Robustness Test Cases", "RT"));
-		System.out.println(excelManager.readTestCases("Strong Equivalance Test Cases", "SET"));
-		System.out.println(excelManager.readTestCases("Weak Eqivalance Test Cases", "WET"));
-		System.out.println(excelManager.readTestCases("Worst Case Test Cases", "WCT"));
-		System.out.println(excelManager.readTestCases("Traditional Equivalence", "TR"));
 
 		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
 		excelManager.save(outputStream);
