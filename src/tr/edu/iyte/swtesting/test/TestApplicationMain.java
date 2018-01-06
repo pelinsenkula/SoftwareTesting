@@ -148,11 +148,17 @@ public class TestApplicationMain {
 	}
 
 	public void uploadInputVariables() {
+		String fname="generated_testcases.xlsx";
+		if(selectedProblem.equals("nextdate")) {
+			fname="nextdate_problem_test_cases.xlsx";
+		}else if(selectedProblem.equals("triangle")) {
+			fname="triangle_problem_test_cases.xlsx";
+		}
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		ec.responseReset();
 		ec.setResponseContentType("vnd.ms-excel");
-		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"output.xlsx\"");
+		ec.setResponseHeader("Content-Disposition", "attachment; filename=\""+fname+"\"");
 		try {
 			generateTestCases(getFile().getInputStream(), ec.getResponseOutputStream());
 		} catch (IOException e) {
@@ -164,11 +170,18 @@ public class TestApplicationMain {
 	}
 
 	public void uploadTestCases() {
+		String fname="output.xlsx";
+		if(selectedProblem.equals("nextdate")) {
+			fname="nextdate_problem_test_result.xlsx";
+		}else if(selectedProblem.equals("triangle")) {
+			fname="triangle_problem_test_result.xlsx";
+		}
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		ec.responseReset();
 		ec.setResponseContentType("vnd.ms-excel");
-		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"output.xlsx\"");
+		ec.setResponseHeader("Content-Disposition", "attachment; filename=\""+fname+"\"");
+
 		try {
 			readAndTestTestCases(getFile().getInputStream(), ec.getResponseOutputStream());
 		} catch (IOException e) {
