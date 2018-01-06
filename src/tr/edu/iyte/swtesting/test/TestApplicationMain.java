@@ -36,10 +36,14 @@ import tr.edu.iyte.swtesting.problems.NextDateProblem;
 @ViewScoped
 public class TestApplicationMain {
 
-	private String message = "Message Field";
+	private String message = "";
 	private Part file;
 	private String selectedProblem = "";
 
+	public String getMessageVisibility() {
+		return message.equals("")?"d-none":"d-block";
+	}
+	
 	public Part getFile() {
 		return file;
 	}
@@ -64,8 +68,8 @@ public class TestApplicationMain {
 		return message;
 	}
 
-	public void setMessage(String info) {
-		this.message = info;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public void generateTestCases(InputStream inputStream, OutputStream outputStream) {
