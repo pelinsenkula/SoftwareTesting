@@ -149,11 +149,11 @@ public class TestApplicationMain {
 
 	public void uploadInputVariables() {
 		String fname="generated_testcases.xlsx";
-		if(selectedProblem.equals("nextdate")) {
-			fname="nextdate_problem_test_cases.xlsx";
-		}else if(selectedProblem.equals("triangle")) {
-			fname="triangle_problem_test_cases.xlsx";
-		}
+//		if(selectedProblem.equals("nextdate")) {
+//			fname="nextdate_problem_test_cases.xlsx";
+//		}else if(selectedProblem.equals("triangle")) {
+//			fname="triangle_problem_test_cases.xlsx";
+//		}
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec = fc.getExternalContext();
 		ec.responseReset();
