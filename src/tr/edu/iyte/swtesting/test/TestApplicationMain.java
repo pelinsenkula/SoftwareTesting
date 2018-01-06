@@ -190,15 +190,15 @@ public class TestApplicationMain {
 				+"\n you can fill the expected results or you can use and manupulate prepared excel file\n");
 		
 		//prepared excel file that contains expected result fields
-//		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases_prepared.xlsx");
+		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases_prepared.xlsx");
 		
 		// if user filled expected results, you can use this.
-		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases.xlsx");
+//		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases.xlsx");
 		OutputStream outputStreamTestResult = new FileOutputStream("resource\\dateInput_tested_testCases.xlsx");
 		testingApplicationMain.readAndTestTestCases(inputStreamGeneratedTestCases, outputStreamTestResult);
 		
 		
-		System.out.println("Test Cases are generated.");
+		System.out.println("Test Cases are generated and tested.");
 
 	}
 }
