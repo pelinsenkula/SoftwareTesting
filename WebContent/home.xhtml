@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Software Testing test project</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous"></link>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col bg-dark mb-3 p-3" style="height: 50px; color: white"></div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h:form id="step1" enctype="multipart/form-data" prependId="false">
+
+					<div class="card">
+						<div class="card-header">
+							<b>Step 1</b>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Upload Excel File to Generate Test
+								cases</h5>
+							<p class="card-text">
+							<div class="form-group">
+								<label for="step1file">Select Excel file includes input
+									variables</label>
+								<h:inputFile id="step1file" class="form-control-file"  required="true"  requiredMessage="Select excel file that contains inputvariables, and upload"
+									value="#{testApplicationMain.file}"></h:inputFile>
+								<small id="step1Help" class="form-text text-muted">
+									Select file and click generate test cases to download generated
+									test case excel file.</small>
+							</div>
+							<h:message for="step1file" errorClass="alert alert-danger" />
+							</p>
+							<h:commandButton
+								value="Upload Excel file and generate test cases"
+								class="btn btn-primary"
+								action="#{testApplicationMain.uploadInputVariables()}"></h:commandButton>
+
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+		<div class="row mb-3"></div>
+		<div class="row">
+			<div class="col">
+				<h:form id="step2" enctype="multipart/form-data" prependId="false">
+
+					<div class="card">
+						<div class="card-header">
+							<b>Step 2</b>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title">Upload Excel File to Test Test Cases</h5>
+							<p class="card-text">
+								<div class="form-group">
+									<label for="step2file">Select Excel file which contains
+										Test Cases And Expected Results</label>
+									<h:inputFile id="step2file" value="#{testApplicationMain.file}"  required="true"  requiredMessage="Select excel file that contains test cases and expected results, and upload"
+										class="form-control-file"></h:inputFile>
+									<small id="step2Help" class="form-text text-muted">Select
+										file and click upload test cases to download Result file.</small>
+								</div>
+								<div class="form-group">
+									<label for="step2Radio">Select Application</label>
+									<h:selectOneRadio id="step2Radio"  required="true" requiredMessage="Select Next date or triangle problem"
+										value="#{testApplicationMain.selectedProblem}">
+										<f:selectItem itemValue="nextdate"
+											itemLabel="Test Next date Problem Application"
+											class="form-check-input" />
+										<f:selectItem itemValue="triangle"
+											itemLabel="Test Triangle Problem Application"
+											class="form-check-input" />
+									</h:selectOneRadio>
+									<small id="step2RadioHelp" class="form-text text-muted">
+										Select application which will be tested with provided test
+										cases and expected results.</small>
+								</div>
+								<h:message for="step2Radio" errorClass="alert alert-danger mr-2" />
+								<h:message for="step2file" errorClass="alert alert-danger" />
+							</p>
+							<h:commandButton
+								id = "testingCases"
+								value="Test Selected Application with provided Test cases"
+								class="btn btn-primary"
+								action="#{testApplicationMain.uploadTestCases()}"></h:commandButton>
+
+						</div>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</body>
+</html>
