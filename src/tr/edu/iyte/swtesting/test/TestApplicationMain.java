@@ -32,9 +32,9 @@ import tr.edu.iyte.swtesting.model.InputVariables;
 import tr.edu.iyte.swtesting.model.TestCase;
 import tr.edu.iyte.swtesting.problems.NextDateProblem;
 
-@ManagedBean(name = "testing")
+@ManagedBean(name = "testApplicationMain")
 @ViewScoped
-public class Test {
+public class TestApplicationMain {
 
 	private String message = "Message Field";
 	private Part file;
@@ -48,7 +48,7 @@ public class Test {
 		this.file = file;
 	}
 
-	public Test() {
+	public TestApplicationMain() {
 
 	}
 
@@ -66,56 +66,6 @@ public class Test {
 
 	public void setMessage(String info) {
 		this.message = info;
-	}
-
-	public void download() throws IOException {
-
-		XSSFWorkbook workbook = new XSSFWorkbook();
-
-		// Create a blank sheet
-		XSSFSheet spreadsheet = workbook.createSheet("Employee Info");
-
-		// Create row object
-		XSSFRow row;
-
-		// This data needs to be written (Object[])
-		Map<String, Object[]> empinfo = new TreeMap<String, Object[]>();
-		empinfo.put("1", new Object[] { "EMP ID", "EMP NAME", "DESIGNATION" });
-		empinfo.put("2", new Object[] { "tp01", "Gopal", "Technical Manager" });
-		empinfo.put("3", new Object[] { "tp02", "Manisha", "Proof Reader" });
-		empinfo.put("4", new Object[] { "tp03", "Masthan", "Technical Writer" });
-		empinfo.put("5", new Object[] { "tp04", "Satish", "Technical Writer" });
-		empinfo.put("6", new Object[] { "tp05", "Krishna", "Technical Writer" });
-
-		// Iterate over data and write to sheet
-		Set<String> keyid = empinfo.keySet();
-		int rowid = 0;
-
-		for (String key : keyid) {
-			row = spreadsheet.createRow(rowid++);
-			Object[] objectArr = empinfo.get(key);
-			int cellid = 0;
-
-			for (Object obj : objectArr) {
-				Cell cell = row.createCell(cellid++);
-				cell.setCellValue((String) obj);
-			}
-		}
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-
-		ec.responseReset();
-		ec.setResponseContentType("vnd.ms-excel");
-		ec.setResponseHeader("Content-Disposition", "attachment; filename=\"excel.xlsx\"");
-		OutputStream output = ec.getResponseOutputStream();
-
-		workbook.write(output);
-
-		fc.responseComplete();
-		output.close();
-		System.out.println("Writesheet.xlsx written successfully");
-
 	}
 
 	public void generateTestCases(InputStream inputStream, OutputStream outputStream) {
@@ -230,42 +180,24 @@ public class Test {
 
 	public static void main(String[] args) throws IOException, InvalidInputException {
 
-		ExcelManager excelManager = new ExcelManager(new FileInputStream("resource\\dateInput_prepared.xlsx"));
-		List<InputVariables> inputVariablesList = excelManager.readInputVariables();
+		TestApplicationMain testingApplicationMain = new TestApplicationMain();
+		testingApplicationMain.setSelectedProblem("nextdate");
+//		testingApplicationMain.setSelectedProblem("triangle");
+		InputStream inputStreamInputVariables = new FileInputStream("resource\\dateInput.xlsx");
+		OutputStream outputStreamGeneratedTestCases = new FileOutputStream("resource\\dateInput_generated_testCases.xlsx");
+		testingApplicationMain.generateTestCases(inputStreamInputVariables, outputStreamGeneratedTestCases);
+		System.out.println("Test Cases are generated.But Expected results areas in the excel file should be filled."
+				+"\n you can fill the expected results or you can use and manupulate prepared excel file\n");
+		
+		//prepared excel file that contains expected result fields
+//		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases_prepared.xlsx");
+		
+		// if user filled expected results, you can use this.
+		InputStream inputStreamGeneratedTestCases = new FileInputStream("resource\\dateInput_generated_testCases.xlsx");
+		OutputStream outputStreamTestResult = new FileOutputStream("resource\\dateInput_tested_testCases.xlsx");
+		testingApplicationMain.readAndTestTestCases(inputStreamGeneratedTestCases, outputStreamTestResult);
 		
 		
-		
-		// List<TestCase> bvt = new Bvt(inputVariablesList, "BVT").generateTestCases();
-		// List<TestCase> worstCasebvt = new WorstCaseBvt(inputVariablesList,
-		// "WCT").generateTestCases();
-		// List<TestCase> robustbvt = new RobustBvt(inputVariablesList,
-		// "RT").generateTestCases();
-		// List<TestCase> strongECT = new StrongECT(inputVariablesList,
-		// "SET").generateTestCases();
-		// List<TestCase> weakECT = new WeakECT(inputVariablesList,
-		// "WET").generateTestCases();
-		// List<TestCase> traditionalECT = new TraditionalECT(inputVariablesList,
-		// "TR").generateTestCases();
-
-		List<TestCase> bvt = excelManager.readTestCases("Boundary Value Analysis", "BVT");
-		List<TestCase> worstCasebvt = excelManager.readTestCases("Worst Case Test Cases", "WCT");
-		List<TestCase> robustbvt = excelManager.readTestCases("Robustness Test Cases", "RT");
-		List<TestCase> strongECT = excelManager.readTestCases("Strong Equivalance Test Cases", "SET");
-		List<TestCase> weakECT = excelManager.readTestCases("Weak Eqivalance Test Cases", "WET");
-		List<TestCase> traditionalECT = excelManager.readTestCases("Traditional Equivalence", "TR");
-
-		// ProblemTester.testTriangleProblem(testCases);
-
-		excelManager.writeTestCases("Boundary Value Analysis", bvt);
-		excelManager.writeTestCases("Robustness Test Cases", robustbvt);
-		excelManager.writeTestCases("Strong Equivalance Test Cases", strongECT);
-		excelManager.writeTestCases("Weak Eqivalance Test Cases", weakECT);
-		excelManager.writeTestCases("Worst Case Test Cases", worstCasebvt);
-		excelManager.writeTestCases("Traditional Equivalence", traditionalECT);
-
-		OutputStream outputStream = new FileOutputStream("resource\\output.xlsx");
-		excelManager.save(outputStream);
-		excelManager.close();
 		System.out.println("Test Cases are generated.");
 
 	}
