@@ -6,17 +6,12 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Software Test case generation and testing Application</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-	integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-	crossorigin="anonymous"></link>
+<title>Insert title here</title>
 </head>
 <body>
+<<<<<<< HEAD
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col bg-dark mb-3 p-3" style="height: 50px; color: white"></div>
@@ -112,5 +107,15 @@
 		integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
 		crossorigin="anonymous"></script>
 
+=======
+	<h:form id="form" enctype="multipart/form-data" prependId="false">
+		<h:inputFile id="file" value="#{testApplicationMain.file}"></h:inputFile>
+		<h:commandButton value="Upload" action="#{testApplicationMain.uploadInputVariables()}" ></h:commandButton>
+
+		<h:commandButton value="download" type="submit"
+			action="#{testApplicationMain.download()}" />
+	</h:form>
+	<h:outputLabel>#{testApplicationMain.message}</h:outputLabel>
+>>>>>>> parent of 5b6d7ae... x
 </body>
 </html>
