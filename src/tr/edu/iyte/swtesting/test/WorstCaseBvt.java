@@ -55,7 +55,9 @@ public class WorstCaseBvt implements TestCaseGenerator {
 				}
 				testCase.put(inputVariablesList.get(i).getId(), val);
 			}
-			testCases.add(testCase);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
 			counters.get(counters.size() - 1).increment();
 		}
 		return testCases;

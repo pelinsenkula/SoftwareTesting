@@ -43,7 +43,9 @@ public class StrongECT implements TestCaseGenerator {
 							.get(counters.get(i).value());
 					testCase.put(inputVariablesList.get(i).getId(), inputVariablesList.get(i).getValuesForECs().get(key));
 			}
-			testCases.add(testCase);
+			if (!testCases.contains(testCase)) {
+				testCases.add(testCase);
+			}
 //			System.out.println();
 			counters.get(counters.size() - 1).increment();
 		}

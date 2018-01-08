@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Software Testing test project</title>
+<title>Software Testing Project</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
 	integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
@@ -15,7 +15,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col bg-dark mb-3 p-3" style="height: 50px; color: white"><b>Software Test</b></div>
+			<div class="col bg-dark mb-3 p-3" style="height: 50px; color: white"><b>Equivalence And Boundary Value Testing</b></div>
 		</div>
 	</div>
 	<div class="container">
@@ -29,10 +29,10 @@
 						</div>
 						<div class="card-body">
 							<h5 class="card-title">Upload Excel File to Generate Test
-								cases</h5>
+								Cases</h5>
 							<p class="card-text">
 								<div class="form-group">
-									<label for="step1file">Select Excel file includes input
+									<label for="step1file">Select Excel file that includes input
 										variables</label>
 									<h:inputFile id="step1file" class="form-control-file"
 										required="true"
@@ -40,13 +40,13 @@
 										value="#{testApplicationMain.file}"></h:inputFile>
 									<small id="step1Help" class="form-text text-muted">
 										Select file and click generate test cases to download
-										generated test case excel file.</small>
+										generated test cases excel file.</small>
 								</div>
 								<h:message for="step1file"
 									errorClass="alert alert-danger d-block" />
 							</p>
 							<h:commandButton
-								value="Upload Excel file and generate test cases"
+								value="Upload Excel File And Generate Test Cases"
 								class="btn btn-primary"
 								action="#{testApplicationMain.uploadInputVariables()}"></h:commandButton>
 
@@ -68,14 +68,14 @@
 							<h5 class="card-title">Upload Excel File to Test Test Cases</h5>
 							<p class="card-text">
 								<div class="form-group">
-									<label for="step2file">Select Excel file which contains
+									<label for="step2file">Select Excel file that contains
 										Test Cases And Expected Results</label>
 									<h:inputFile id="step2file" value="#{testApplicationMain.file}"
 										required="true"
 										requiredMessage="Select excel file that contains test cases and expected results, and upload"
 										class="form-control-file"></h:inputFile>
 									<small id="step2Help" class="form-text text-muted">Select
-										file and click upload test cases to download Result file.</small>
+										file and click upload test cases to download result file.</small>
 								</div>
 								<div class="form-group">
 									<label for="step2Radio">Select Application</label>
@@ -83,10 +83,10 @@
 										requiredMessage="Select Next date or triangle problem"
 										value="#{testApplicationMain.selectedProblem}">
 										<f:selectItem itemValue="nextdate"
-											itemLabel=" Test Next date Problem Application"
+											itemLabel=" Test Next Date Problem "
 											class="form-check-input" />
 										<f:selectItem itemValue="triangle"
-											itemLabel=" Test Triangle Problem Application"
+											itemLabel=" Test Triangle Problem "
 											class="form-check-input" />
 									</h:selectOneRadio>
 									<small id="step2RadioHelp" class="form-text text-muted">
@@ -100,7 +100,7 @@
 									errorClass="alert alert-danger d-block" />
 							</p>
 							<h:commandButton id="testingCases"
-								value="Upload Excel file that contains Test cases"
+								value="Upload Excel File That Contains Test Cases And Expected Results"
 								class="btn btn-primary"
 								action="#{testApplicationMain.uploadTestCases()}"></h:commandButton>
 

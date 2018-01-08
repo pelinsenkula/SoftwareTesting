@@ -25,16 +25,17 @@ public class ProblemTester {
 	}
 	
 	public static void testTriangleProblem(List<TestCase> testCases) {
-		for (TestCase testCase : testCases) {
-			Integer a = Integer.parseInt(testCase.getValue("IV1"));
-			Integer b = Integer.parseInt(testCase.getValue("IV2"));
-			Integer c = Integer.parseInt(testCase.getValue("IV3"));
+		for (TestCase testCase : testCases) {			
 			try {
+				Integer a = Integer.parseInt(testCase.getValue("IV1"));
+				Integer b = Integer.parseInt(testCase.getValue("IV2"));
+				Integer c = Integer.parseInt(testCase.getValue("IV3"));
 				TriangleProblem triangle = new TriangleProblem();
 				String observed = triangle.tri_type(a, b, c);
 				testCase.setObserved(observed);
 			} catch (RuntimeException e) {
 				testCase.setObserved(e.getMessage());
+				System.out.println(testCase);
 			}
 			testCase.tested();
 		}
